@@ -1,9 +1,7 @@
 package com.example.UmbrellaClinic.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +22,8 @@ public class Cita {
     private Date fechaCita;
     private Time HoraCita;
     private String Sucursal;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
 }
