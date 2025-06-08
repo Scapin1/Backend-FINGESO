@@ -1,9 +1,8 @@
-package com.example.UmbrellaClinic.Controller;
+package com.example.UmbrellaClinic.Controller.Usuarios;
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Service.Impl.Usuarios.PacienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +12,23 @@ public class PacienteController {
     @Autowired
     private PacienteServiceImpl pacienteService;
 
-    @GetMapping("/getpacientes")
+    @GetMapping("/getPacientes")
     public List<Paciente> GetPacientes(){
         return pacienteService.findAll();
     }
-    @PostMapping("/crearpaciente")
+
+    @GetMapping("/getPaciente/{id}")
+    public Paciente GetPaciente(@PathVariable Long id){
+        return pacienteService.getById(id);
+    }
+
+    @PostMapping("/crearPaciente")
     public void CrearPaciente(@RequestBody Paciente paciente){
         pacienteService.save(paciente);
+    }
+
+    @DeleteMapping("/eliminarPaciente/{id}")
+    public void EliminarPaciente(@PathVariable Long id) {
+        pacienteService.deleteById(id);
     }
 }
