@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class reporte {
+public class Reporte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idReporte;

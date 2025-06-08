@@ -18,6 +18,6 @@ public abstract class Usuario {
     private String nombre;
     private String rol;
     private String correo;
-    private String Contraseña;
+    private String contraseña;
 
 }
