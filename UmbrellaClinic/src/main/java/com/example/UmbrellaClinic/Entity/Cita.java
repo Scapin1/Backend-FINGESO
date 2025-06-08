@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -20,8 +21,8 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idCita;
     private Date fechaCita;
-    private Time HoraCita;
     private String Sucursal;
+    private LocalTime HoraCita;
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
