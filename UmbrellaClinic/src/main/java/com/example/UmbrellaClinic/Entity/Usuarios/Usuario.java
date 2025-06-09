@@ -1,6 +1,7 @@
 package com.example.UmbrellaClinic.Entity.Usuarios;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,21 @@ public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @JsonProperty("rut")
     private String rut;
+
+    @JsonProperty("nombre")
     private String nombre;
+
+    @JsonProperty("rol")
     private String rol;
+
+    @JsonProperty("correo")
     private String correo;
-    private String contraseña;
+
+    @JsonProperty("password")
+    private String password;
+
+
 
 }
