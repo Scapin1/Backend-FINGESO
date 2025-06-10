@@ -2,6 +2,7 @@ package com.example.UmbrellaClinic.Entity;
 
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
