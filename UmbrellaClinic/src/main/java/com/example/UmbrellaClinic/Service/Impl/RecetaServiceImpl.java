@@ -25,7 +25,7 @@ public class RecetaServiceImpl implements RecetaService {
 
     @Override
     public void save(Receta receta) {
-        recetaRepository.save(receta);
+        return recetaRepository.findByPaciente_Rut(rut);
     }
 
     @Override

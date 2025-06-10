@@ -30,6 +30,24 @@ public class RecetaController {
 
     @DeleteMapping("/eliminarReceta/{id}")
     public void eliminarReceta(@PathVariable Long id) {
+    }
+    }
+    // Modificamos este endpoint para usar el nuevo metodo
+    @GetMapping("/porPacienteRut/{rutPaciente}") // Cambiado el nombre del endpoint para mayor claridad
+    public ResponseEntity<List<Receta>> getRecetasByRutPaciente(@PathVariable String rutPaciente) {
+        List<Receta> recetas = recetaService.findByPacienteRut(rutPaciente);
+        if (!recetas.isEmpty()) {
+            return new ResponseEntity<>(recetas, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Endpoint para eliminar una receta
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Devuelve 204 No Content al eliminar con éxito
+    public void deleteReceta(@PathVariable Long id) {
         recetaService.deleteById(id);
     }
+
 }

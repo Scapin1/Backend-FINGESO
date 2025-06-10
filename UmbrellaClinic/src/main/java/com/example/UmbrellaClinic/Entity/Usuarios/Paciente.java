@@ -24,4 +24,7 @@ public class Paciente extends Usuario {
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
     private List<Cita> citasList;
+    @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
+    private List<Receta> recetas; // Una lista de recetas de este paciente
 }
