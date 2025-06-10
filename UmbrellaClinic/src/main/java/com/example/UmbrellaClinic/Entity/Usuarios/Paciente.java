@@ -1,8 +1,7 @@
 package com.example.UmbrellaClinic.Entity.Usuarios;
 
 import com.example.UmbrellaClinic.Entity.Cita;
-import com.example.UmbrellaClinic.Entity.Examen;
-import com.example.UmbrellaClinic.Entity.HistorialMedico;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Paciente extends Usuario {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaNacimiento;
 
     @OneToMany(mappedBy = "paciente")
@@ -30,5 +30,8 @@ public class Paciente extends Usuario {
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
-    private List<Examen> examenList;
+    private List<Cita> citasList;
+    @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
+    private List<Receta> recetas; // Una lista de recetas de este paciente
 }

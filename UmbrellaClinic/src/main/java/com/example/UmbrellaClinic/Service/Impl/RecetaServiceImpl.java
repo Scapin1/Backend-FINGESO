@@ -19,17 +19,17 @@ public class RecetaServiceImpl implements RecetaService {
     }
 
     @Override
+    public Receta save(Receta receta) {
+        // Aquí podrías añadir lógica de negocio antes de guardar,
+        // por ejemplo, validar la fecha de vigencia, etc.
+        return recetaRepository.save(receta);
+    }
+    @Override
     public void deleteById(Long id) {
         recetaRepository.deleteById(id);
     }
-
     @Override
-    public void save(Receta receta) {
-        recetaRepository.save(receta);
-    }
-
-    @Override
-    public Receta getById(Long id) {
-        return recetaRepository.findById(id).orElse(null);
+    public List<Receta> findByPacienteRut(String rut) { // Implementación del nuevo mé
+        return recetaRepository.findByPaciente_Rut(rut);
     }
 }
