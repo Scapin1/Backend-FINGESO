@@ -1,12 +1,13 @@
 package com.example.UmbrellaClinic.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.example.UmbrellaClinic.Entity.Usuarios.QuimicoFarmaceutico;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,4 +22,10 @@ public class Medicamento {
     private int stock;
     private String descripcion;
 
+    @ManyToMany
+    private List<Receta> recetasList;
+
+    @ManyToOne
+    @JoinColumn(name = "Id_quimicoFarmaceutico")
+    private QuimicoFarmaceutico quimicoFarmaceutico;
 }

@@ -1,6 +1,8 @@
 package com.example.UmbrellaClinic.Entity.Usuarios;
 
 import com.example.UmbrellaClinic.Entity.Cita;
+import com.example.UmbrellaClinic.Entity.Examen;
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,9 +21,14 @@ import java.util.List;
 public class Paciente extends Usuario {
     private Date fechaNacimiento;
 
-
-
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
     private List<Cita> citasList;
+
+    @OneToOne
+    private HistorialMedico historialMedico;
+
+    @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
+    private List<Examen> examenList;
 }
