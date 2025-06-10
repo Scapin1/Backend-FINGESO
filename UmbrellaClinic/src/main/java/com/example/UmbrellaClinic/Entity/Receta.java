@@ -24,5 +24,12 @@ public class Receta {
     private String observaciones;
     private Date vigencia;
     private String estado;
+    @ManyToOne
+    @JoinColumn(name = "medico_id") // Clave foránea para Medico
+    private Medico medico;
 
+    // *** NUEVA RELACIÓN MANY-TO-ONE CON PACIENTE ***
+    @ManyToOne
+    @JoinColumn(name = "paciente_id") // Define la columna de clave foránea en la tabla 'receta'
+    private Paciente paciente; // El objeto Paciente asociado a esta receta
 }

@@ -21,12 +21,7 @@ import java.util.List;
 public class Medico extends Usuario {
 
     private String especialidad;
-
     @OneToMany(mappedBy = "medico")
     @JsonIgnore
-    private List<Cita> citasList;
-
-    @OneToMany(mappedBy = "medico")
-    @JsonIgnore
-    private List<Examen> examenList;
+    private List<Receta> recetas;
 }
