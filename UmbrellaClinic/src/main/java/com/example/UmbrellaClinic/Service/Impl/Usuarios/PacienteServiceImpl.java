@@ -2,7 +2,6 @@ package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
-import com.example.UmbrellaClinic.Entity.Usuarios.Usuario;
 import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +46,11 @@ public class PacienteServiceImpl implements PacienteService {
             return usuario.getPassword().equals(password);
         }
         return false; // Usuario no encontrado o contraseña incorrecta
+    }
+
+    @Override
+    public int getIdByRut(String rut) {
+        return pacienteRepository.findIdByRut(rut);
     }
 
     public UserType getUserType() {
