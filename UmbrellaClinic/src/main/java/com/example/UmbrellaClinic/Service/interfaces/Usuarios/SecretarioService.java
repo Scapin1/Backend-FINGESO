@@ -14,4 +14,6 @@ public interface SecretarioService {
     void save(Secretario secretario);
 
     Secretario getById(Long id);
+
+    boolean autorizacionLoginSecretario(String correo, String password);
 }

@@ -6,6 +6,7 @@ import com.example.UmbrellaClinic.Repository.Usuarios.SoporteTecnicoRepository;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.SoporteTecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -34,6 +35,14 @@ public class SoporteTecnicoServiceImpl implements SoporteTecnicoService {
         return soporteTecnicoRepository.findById(id).orElse(null);
     }
 
-
+    @Override
+    public boolean autorizacionLoginSoporteTecnico(String correo, String password) {
+        Optional<SoporteTecnico> optSoporteTecnico = soporteTecnicoRepository.findByCorreo(correo);
+        if (optSoporteTecnico.isPresent()) {
+            SoporteTecnico usuario = optSoporteTecnico.get();
+            return usuario.getPassword().equals(password);
+        }
+        return false; // Usuario no encontrado o contraseña incorrecta
+    }
 
 }

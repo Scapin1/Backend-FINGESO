@@ -14,4 +14,6 @@ public interface MedicoService{
     void save(Medico medico);
 
     Medico getById(Long id);
+
+    boolean autorizacionLoginMedico(String correo, String password);
 }

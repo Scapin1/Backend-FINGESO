@@ -13,4 +13,6 @@ public interface GerenteService {
     void save(Gerente gerente);
 
     Gerente getById(Long id);
+
+    boolean autorizacionLoginGerente(String correo, String password);
 }
