@@ -6,6 +6,7 @@ import com.example.UmbrellaClinic.Entity.Usuarios.*;
 import com.example.UmbrellaClinic.Repository.Usuarios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.UmbrellaClinic.DTOs.UserType;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -25,23 +26,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private SoporteTecnicoRepository soporteRepo;
 
-
-    public UsuarioServiceImpl(
-            PacienteRepository pacienteRepo,
-            EnfermeroRepository enfermeroRepo,
-            MedicoRepository medicoRepo,
-            QuimicoFarmaceuticoRepository quimicoRepo,
-            GerenteRepository gerenteRepo,
-            SecretarioRepository secretarioRepo,
-            SoporteTecnicoRepository soporteRepo) {
-        this.pacienteRepo   = pacienteRepo;
-        this.enfermeroRepo  = enfermeroRepo;
-        this.medicoRepo     = medicoRepo;
-        this.quimicoRepo    = quimicoRepo;
-        this.gerenteRepo    = gerenteRepo;
-        this.secretarioRepo = secretarioRepo;
-        this.soporteRepo    = soporteRepo;
-    }
 
     @Override
     public Integer verificarTipoUsuario(String correo) {
