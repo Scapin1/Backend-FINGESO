@@ -8,6 +8,7 @@ import com.example.UmbrellaClinic.Service.interfaces.Usuarios.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import com.example.UmbrellaClinic.DTOs.UserType;
 
 import java.util.List;
 
@@ -44,5 +45,8 @@ public class MedicoServiceImpl implements MedicoService {
             return usuario.getPassword().equals(password);
         }
         return false; // Usuario no encontrado o contraseña incorrecta
+    }
+    public UserType getUserType() {
+        return UserType.MEDICO;
     }
 }

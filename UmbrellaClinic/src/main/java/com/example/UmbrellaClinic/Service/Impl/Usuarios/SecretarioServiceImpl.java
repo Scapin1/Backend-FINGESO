@@ -8,6 +8,7 @@ import com.example.UmbrellaClinic.Service.interfaces.Usuarios.SecretarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import com.example.UmbrellaClinic.DTOs.UserType;
 
 import java.util.List;
 
@@ -45,4 +46,9 @@ public class SecretarioServiceImpl implements SecretarioService {
         }
         return false; // Usuario no encontrado o contraseña incorrecta
     }
+
+    public UserType getUserType() {
+        return UserType.SECRETARIO;
+    }
+
 }
