@@ -1,8 +1,10 @@
 package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 
 
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Entity.Usuarios.QuimicoFarmaceutico;
 import com.example.UmbrellaClinic.Repository.Usuarios.QuimicoFarmaceuticoRepository;
+import com.example.UmbrellaClinic.Service.interfaces.LoginService;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.QuimicoFarmaceuticoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import com.example.UmbrellaClinic.DTOs.UserType;
 import java.util.List;
 
 @Service
-public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoService {
+public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoService, LoginService {
     @Autowired
     private QuimicoFarmaceuticoRepository quimicoFarmaceuticoRepository;
 
@@ -49,5 +51,10 @@ public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoServic
     public UserType getUserType() {
         return UserType.QUIMICO_FARMACEUTICO;
     }
-
+    public boolean authenticate(String correo, String password) {
+        Optional<QuimicoFarmaceutico> optQuimicoFarmaceutico = quimicoFarmaceuticoRepository.findByCorreo(correo);
+        return optQuimicoFarmaceutico
+                .map(p -> p.getPassword().equals(password))
+                .orElse(false);
+    }
 }

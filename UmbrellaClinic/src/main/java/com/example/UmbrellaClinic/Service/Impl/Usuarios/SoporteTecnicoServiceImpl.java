@@ -1,8 +1,10 @@
 package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 
 
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Entity.Usuarios.SoporteTecnico;
 import com.example.UmbrellaClinic.Repository.Usuarios.SoporteTecnicoRepository;
+import com.example.UmbrellaClinic.Service.interfaces.LoginService;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.SoporteTecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import com.example.UmbrellaClinic.DTOs.UserType;
 import java.util.List;
 
 @Service
-public class SoporteTecnicoServiceImpl implements SoporteTecnicoService {
+public class SoporteTecnicoServiceImpl implements SoporteTecnicoService, LoginService {
     @Autowired
     private SoporteTecnicoRepository soporteTecnicoRepository;
 
@@ -48,6 +50,13 @@ public class SoporteTecnicoServiceImpl implements SoporteTecnicoService {
 
     public UserType getUserType() {
         return UserType.SOPORTE_TECNICO;
+    }
+
+    public boolean authenticate(String correo, String password) {
+        Optional<SoporteTecnico> optSoporteTecnico = soporteTecnicoRepository.findByCorreo(correo);
+        return optSoporteTecnico
+                .map(p -> p.getPassword().equals(password))
+                .orElse(false);
     }
 
 }

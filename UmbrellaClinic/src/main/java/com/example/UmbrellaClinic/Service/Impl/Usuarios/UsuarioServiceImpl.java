@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public Integer verificarTipoUsuario(String correo) {
+    public int verificarTipoUsuario(String correo) {
         // como cada findByCorreo devuelve Optional<...>, puedes usar isPresent()
         if (pacienteRepo.findByCorreo(correo).isPresent()) {
             return 1;
