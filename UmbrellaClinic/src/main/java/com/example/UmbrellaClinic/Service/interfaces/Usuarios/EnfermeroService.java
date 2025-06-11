@@ -14,4 +14,6 @@ public interface EnfermeroService {
     void save(Enfermero enfermero);
 
     Enfermero getById(Long id);
+
+    boolean autorizacionLoginEnfermero(String correo, String password);
 }

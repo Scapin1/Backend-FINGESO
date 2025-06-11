@@ -2,10 +2,12 @@ package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
+import com.example.UmbrellaClinic.Entity.Usuarios.Usuario;
 import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 @Service
@@ -36,4 +38,13 @@ public class PacienteServiceImpl implements PacienteService {
         return pacienteRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public boolean autorizacionLoginPaciente(String correo, String password) {
+        Optional<Paciente> optPaciente = pacienteRepository.findByCorreo(correo);
+        if (optPaciente.isPresent()) {
+            Paciente usuario = optPaciente.get();
+            return usuario.getPassword().equals(password);
+        }
+        return false; // Usuario no encontrado o contraseña incorrecta
+    }
 }

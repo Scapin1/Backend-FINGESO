@@ -6,6 +6,7 @@ import com.example.UmbrellaClinic.Repository.Usuarios.QuimicoFarmaceuticoReposit
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.QuimicoFarmaceuticoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -34,5 +35,13 @@ public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoServic
     public QuimicoFarmaceutico getById(Long id) {
         return quimicoFarmaceuticoRepository.findById(id).orElse(null);
     }
-
+    @Override
+    public boolean autorizacionLoginQuimicoFarmaceutico(String correo, String password) {
+        Optional<QuimicoFarmaceutico> optQuimicoFarmaceutico = quimicoFarmaceuticoRepository.findByCorreo(correo);
+        if (optQuimicoFarmaceutico.isPresent()) {
+            QuimicoFarmaceutico usuario = optQuimicoFarmaceutico.get();
+            return usuario.getPassword().equals(password);
+        }
+        return false; // Usuario no encontrado o contraseña incorrecta
+    }
 }

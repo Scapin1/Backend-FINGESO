@@ -5,6 +5,7 @@ import com.example.UmbrellaClinic.Repository.Usuarios.GerenteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.GerenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -31,5 +32,14 @@ public class GerenteServiceImpl implements GerenteService {
     @Override
     public Gerente getById(Long id) {
         return gerenteRepository.getById(id);
+    }
+    @Override
+    public boolean autorizacionLoginGerente(String correo, String password) {
+        Optional<Gerente> optGerente = gerenteRepository.findByCorreo(correo);
+        if (optGerente.isPresent()) {
+            Gerente usuario = optGerente.get();
+            return usuario.getPassword().equals(password);
+        }
+        return false; // Usuario no encontrado o contraseña incorrecta
     }
 }

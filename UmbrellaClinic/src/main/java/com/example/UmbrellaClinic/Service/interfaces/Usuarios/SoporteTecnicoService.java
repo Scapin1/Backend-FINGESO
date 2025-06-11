@@ -13,4 +13,6 @@ public interface SoporteTecnicoService{
     void save(SoporteTecnico soporteTecnico);
 
     SoporteTecnico getById(Long id);
+
+    boolean autorizacionLoginSoporteTecnico(String correo, String password);
 }
