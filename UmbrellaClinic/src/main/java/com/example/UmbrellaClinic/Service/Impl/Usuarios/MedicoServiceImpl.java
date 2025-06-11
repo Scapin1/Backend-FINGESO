@@ -4,6 +4,7 @@ package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.Usuarios.MedicoRepository;
+import com.example.UmbrellaClinic.Service.interfaces.LoginService;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.example.UmbrellaClinic.DTOs.UserType;
 import java.util.List;
 
 @Service
-public class MedicoServiceImpl implements MedicoService {
+public class MedicoServiceImpl implements MedicoService, LoginService {
     @Autowired
     private MedicoRepository medicoRepository;
 
@@ -49,4 +50,12 @@ public class MedicoServiceImpl implements MedicoService {
     public UserType getUserType() {
         return UserType.MEDICO;
     }
+
+    public boolean authenticate(String correo, String password) {
+        Optional<Medico> optMedico = medicoRepository.findByCorreo(correo);
+        return optMedico
+                .map(p -> p.getPassword().equals(password))
+                .orElse(false);
+    }
+
 }
