@@ -32,4 +32,9 @@ public class PacienteController {
     public void EliminarPaciente(@PathVariable Long id) {
         pacienteService.deleteById(id);
     }
+
+    @GetMapping("/getIdByRut/{rut}")
+    public int getIdByRut(@PathVariable String rut) {
+        return pacienteService.getIdByRut(rut);
+    }
 }
