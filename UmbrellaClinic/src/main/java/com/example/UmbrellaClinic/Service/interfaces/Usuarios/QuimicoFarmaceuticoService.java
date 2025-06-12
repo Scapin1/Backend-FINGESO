@@ -14,4 +14,6 @@ public interface QuimicoFarmaceuticoService{
     void save(QuimicoFarmaceutico quimicoFarmaceutico);
 
     QuimicoFarmaceutico getById(Long id);
+
+    boolean autorizacionLoginQuimicoFarmaceutico(String correo, String password);
 }

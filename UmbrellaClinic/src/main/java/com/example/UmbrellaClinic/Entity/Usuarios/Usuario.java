@@ -30,6 +30,7 @@ public abstract class Usuario {
     @JsonProperty("password")
     private String password;
 
-
-
+    public String getPassword() {
+        return password;
+    }
 }
