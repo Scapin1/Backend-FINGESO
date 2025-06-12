@@ -26,14 +26,14 @@ public class Paciente extends Usuario {
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
-    private List<Cita> citasList;
+    private List<Cita> citas;
 
     @OneToOne
     private HistorialMedico historialMedico;
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
-    private List<Examen> examenList;
+    private List<Examen> examenes;
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore

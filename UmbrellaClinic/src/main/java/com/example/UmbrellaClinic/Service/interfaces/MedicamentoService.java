@@ -12,4 +12,6 @@ public interface MedicamentoService {
     void save(Medicamento medicamento);
 
     Medicamento getById(Long id);
+
+    Medicamento updateStocks(String nombreMed, int newStockReal, int newStockReceta);
 }

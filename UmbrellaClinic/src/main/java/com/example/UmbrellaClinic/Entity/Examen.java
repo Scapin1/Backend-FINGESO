@@ -23,14 +23,9 @@ public class Examen {
     private String tipo;
     private Date fechaExamen;
 
-
     @ManyToOne
     @JoinColumn(name = "idPaciente")
     private Paciente paciente;
-
-    @ManyToOne
-    @JoinColumn(name = "idMedico")
-    private Medico medico;
 
     @ManyToOne
     @JoinColumn(name = "idEnfermero")

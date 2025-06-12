@@ -9,6 +9,4 @@ import java.util.List;
 @Entity
 public class QuimicoFarmaceutico extends Usuario {
 
-    @OneToMany(mappedBy = "quimicoFarmaceutico")
-    private List<Medicamento> medicamentosList;
 }
