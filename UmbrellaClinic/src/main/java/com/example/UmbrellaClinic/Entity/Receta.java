@@ -24,7 +24,7 @@ public class Receta {
     private Date fechaEmision;
     private String observaciones;
     private Date vigencia;
-    private String estado;
+    private Boolean estado; //"True" si esta entregada, "False" si no lo esta
     @ManyToOne
     @JoinColumn(name = "medico_id") // Clave foránea para Medico
     private Medico medico;
