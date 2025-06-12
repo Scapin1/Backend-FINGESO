@@ -28,8 +28,4 @@ public class Medico extends Usuario {
     @OneToMany(mappedBy = "medico")
     @JsonIgnore
     private List<Cita> citasList;
-
-    @OneToMany(mappedBy = "medico")
-    @JsonIgnore
-    private List<Examen> examenList;
 }

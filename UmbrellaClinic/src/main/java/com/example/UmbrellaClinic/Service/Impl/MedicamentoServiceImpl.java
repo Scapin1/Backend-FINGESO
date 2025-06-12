@@ -32,4 +32,9 @@ public class MedicamentoServiceImpl implements MedicamentoService {
     public Medicamento getById(Long id) {
         return medicamentoRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Medicamento updateStocks(String nombreMed, int newStockReal, int newStockReceta) {
+        return null;
+    }
 }
