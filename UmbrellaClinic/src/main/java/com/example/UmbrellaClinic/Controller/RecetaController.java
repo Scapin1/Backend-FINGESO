@@ -1,12 +1,16 @@
 package com.example.UmbrellaClinic.Controller;
 
+import com.example.UmbrellaClinic.Entity.Medicamento;
 import com.example.UmbrellaClinic.Entity.Receta;
 import com.example.UmbrellaClinic.Service.Impl.RecetaServiceImpl;
+import com.example.UmbrellaClinic.Service.interfaces.MedicamentoService;
+import com.example.UmbrellaClinic.Service.interfaces.RecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -15,12 +19,13 @@ import java.util.List;
 public class RecetaController {
     @Autowired
     private RecetaServiceImpl recetaService;
+    @Autowired
+    private MedicamentoService medicamentoService;
 
     @GetMapping("/getRecetas")
     public List<Receta> getRecetas() {
         return recetaService.findAll();
     }
-
     @GetMapping("/getReceta/{id}")
     public Receta getReceta(@PathVariable Long id) {
         return recetaService.getById(id);

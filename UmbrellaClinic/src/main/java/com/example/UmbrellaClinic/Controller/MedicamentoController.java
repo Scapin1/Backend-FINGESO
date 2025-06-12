@@ -3,6 +3,8 @@ package com.example.UmbrellaClinic.Controller;
 import com.example.UmbrellaClinic.Entity.Medicamento;
 import com.example.UmbrellaClinic.Service.Impl.MedicamentoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +33,19 @@ public class MedicamentoController {
     @DeleteMapping("/eliminarMedicamento/{id}")
     public void eliminarMedicamento(@PathVariable Long id) {
         medicamentoService.deleteById(id);
+    }
+
+    // Endpoint para actualizar solo los stocks de un medicamento
+    @PutMapping("/{nombreMed}/actualizar-stock")
+    public ResponseEntity<Medicamento> updateMedicamentoStocks(
+            @PathVariable String nombreMed,
+            @RequestParam int stockReal,
+            @RequestParam int stockReceta) {
+        try {
+            Medicamento updatedMedicamento = medicamentoService.updateStocks(nombreMed, stockReal, stockReceta);
+            return new ResponseEntity<>(updatedMedicamento, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
