@@ -37,4 +37,14 @@ public class PacienteController {
     public int getIdByRut(@PathVariable String rut) {
         return pacienteService.getIdByRut(rut);
     }
+
+    @GetMapping("/rut/{rut}/historial")
+    public Object getHistorialPorRut(@PathVariable String rut) {
+        Paciente paciente = pacienteService.getByRut(rut);
+        if (paciente != null && paciente.getHistorialMedico() != null) {
+            return paciente.getHistorialMedico();
+        } else {
+            return "Historial no encontrado";
+        }
+    }
 }

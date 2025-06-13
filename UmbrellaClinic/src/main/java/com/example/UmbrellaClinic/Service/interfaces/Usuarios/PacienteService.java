@@ -16,4 +16,6 @@ public interface PacienteService {
     Paciente getById(Long id);
 
     int getIdByRut(String rut);
+
+    Paciente getByRut(String rut);
 }

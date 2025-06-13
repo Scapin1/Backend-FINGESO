@@ -1,12 +1,21 @@
 package com.example.UmbrellaClinic.Entity;
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class HistorialMedico {
 
     @Id
@@ -15,9 +24,14 @@ public class HistorialMedico {
 
     @OneToOne
     @JoinColumn(name = "idPaciente")
+    @JsonBackReference
     private Paciente paciente;
 
-    @OneToMany(mappedBy = "historialMedico")
-    @JsonIgnore
-    private List<Examen> examenList;
+    @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("historial-examenes")
+    private List<Examen> examenes;
+
+    @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("historial-examenes")
+    private List<Receta> recetas;
 }

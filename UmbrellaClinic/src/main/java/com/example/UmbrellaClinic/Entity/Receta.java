@@ -3,6 +3,7 @@ package com.example.UmbrellaClinic.Entity;
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,13 +26,14 @@ public class Receta {
     private Date fechaEmision;
     private String observaciones;
     private Date vigencia;
-    private Boolean estado; //"True" si esta entregada, "False" si no lo esta
+    private Boolean estado;
     @ManyToOne
     @JoinColumn(name = "medico_id") // Clave foránea para Medico
     private Medico medico;
 
     @ManyToOne
     @JoinColumn(name = "paciente_id") // Define la columna de clave foránea en la tabla 'receta'
+    @JsonBackReference
     private Paciente paciente; // El objeto Paciente asociado a esta receta
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -45,4 +47,9 @@ public class Receta {
     //cambios que quiero consultar
     private String examenIndicado;
     private String diagnostico;
+
+    @ManyToOne
+    @JoinColumn(name = "idHistorialMedico")
+    @JsonBackReference("historial-examenes")
+    private HistorialMedico historialMedico;
 }

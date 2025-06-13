@@ -13,4 +13,5 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     Optional<Paciente> findByCorreo(String correo);
     @Query("SELECT p.id FROM Paciente p WHERE p.rut = ?1")
     int findIdByRut(String rut);
+    Optional<Paciente> findByRut(String rut);
 }
