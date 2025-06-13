@@ -67,5 +67,12 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         medicamento.setStockReceta(0);
     }
 
+    @Transactional
+    public void entregarMedicamentos(String nombreComercial, int cantidad) {
+        Medicamento medicamento = getByNombreComercial(nombreComercial);
+        medicamento.setStockReal(medicamento.getStockReal() - cantidad);
+        medicamento.setStockReceta(medicamento.getStockReceta() - cantidad);
+    }
+
 
 }

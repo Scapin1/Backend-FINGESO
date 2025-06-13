@@ -42,4 +42,10 @@ public class MedicamentoController {
     public void actualizarStockMedicamentos(@PathVariable String nombreComercial,@PathVariable int tipo,@PathVariable int cantidad) {
         medicamentoService.actualizarStockMedicamentos(nombreComercial,tipo,cantidad);
     }
+    //tengo que hacer un metodo para que el quimico entregue un medicamento y de
+    // actualicen ambos stock de un medicamento que aparezca en la receta
+    @PostMapping("/entregarMedicamentos/{nombreComercial}/{cantidad}")
+    public  void entregarMedicamentos(@PathVariable String nombreComercial,@PathVariable int cantidad) {
+        medicamentoService.entregarMedicamentos(nombreComercial,cantidad);
+    }
 }
