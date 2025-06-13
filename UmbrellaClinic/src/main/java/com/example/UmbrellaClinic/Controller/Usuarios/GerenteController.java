@@ -23,12 +23,12 @@ public class GerenteController {
         return gerenteService.getById(id);
     }
 
-    @GetMapping("/crearGerente")
+    @PostMapping("/crearGerente")
     public void crearGerente(@RequestBody Gerente gerente){
         gerenteService.save(gerente);
     }
 
-    @GetMapping("/eliminarGerente/{id}")
+    @DeleteMapping("/eliminarGerente/{id}")
     public void eliminarGerente(@PathVariable Long id) {
         gerenteService.deleteById(id);
     }

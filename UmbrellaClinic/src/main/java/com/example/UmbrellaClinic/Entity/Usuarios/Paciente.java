@@ -6,6 +6,7 @@ import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Receta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,14 +29,15 @@ public class Paciente extends Usuario {
     @JsonIgnore
     private List<Cita> citas;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
+    @JsonManagedReference
     private HistorialMedico historialMedico;
 
-    @OneToMany(mappedBy = "paciente")
-    @JsonIgnore
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Examen> examenes;
 
-    @OneToMany(mappedBy = "paciente")
-    @JsonIgnore
-    private List<Receta> recetas; // Una lista de recetas de este paciente
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Receta> recetas;
 }

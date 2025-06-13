@@ -14,5 +14,4 @@ public interface SoporteTecnicoService{
 
     SoporteTecnico getById(Long id);
 
-    boolean autorizacionLoginSoporteTecnico(String correo, String password);
 }

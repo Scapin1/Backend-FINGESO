@@ -3,6 +3,7 @@ package com.example.UmbrellaClinic.Entity;
 import com.example.UmbrellaClinic.Entity.Usuarios.Enfermero;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Examen {
 
     @ManyToOne
     @JoinColumn(name = "idPaciente")
+    @JsonBackReference
     private Paciente paciente;
 
     @ManyToOne
@@ -33,5 +35,6 @@ public class Examen {
 
     @ManyToOne
     @JoinColumn(name = "idHistorialMedico")
+    @JsonBackReference("historial-examenes") // Nombre único para evitar conflictos
     private HistorialMedico historialMedico;
 }

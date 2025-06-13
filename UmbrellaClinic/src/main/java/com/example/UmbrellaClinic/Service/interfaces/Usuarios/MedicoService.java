@@ -15,5 +15,4 @@ public interface MedicoService{
 
     Medico getById(Long id);
 
-    boolean autorizacionLoginMedico(String correo, String password);
 }

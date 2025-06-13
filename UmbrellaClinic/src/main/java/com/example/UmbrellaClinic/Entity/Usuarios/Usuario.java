@@ -16,6 +16,7 @@ public abstract class Usuario {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @JsonProperty("rut")
+    @Column(unique = true, nullable = false)
     private String rut;
 
     @JsonProperty("nombre")
@@ -30,7 +31,4 @@ public abstract class Usuario {
     @JsonProperty("password")
     private String password;
 
-    public String getPassword() {
-        return password;
-    }
 }

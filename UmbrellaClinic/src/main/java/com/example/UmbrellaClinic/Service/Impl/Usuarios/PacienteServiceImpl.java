@@ -1,6 +1,9 @@
 package com.example.UmbrellaClinic.Service.Impl.Usuarios;
 
 
+import com.example.UmbrellaClinic.Entity.Examen;
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
+import com.example.UmbrellaClinic.Entity.Receta;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.LoginService;
@@ -31,8 +34,36 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
 
     @Override
     public void save(Paciente paciente) {
-        pacienteRepository.save(paciente);
+        // Si no tiene historial médico, se crea
+        if (paciente.getHistorialMedico() == null) {
+            HistorialMedico historial = new HistorialMedico();
+            historial.setPaciente(paciente);  // Aquí se enlaza el idPaciente
+            paciente.setHistorialMedico(historial);
+        }
+
+        HistorialMedico historialMedico = paciente.getHistorialMedico();
+
+        // Relacionar exámenes
+        if (paciente.getExamenes() != null) {
+            for (Examen examen : paciente.getExamenes()) {
+                examen.setPaciente(paciente);
+                examen.setHistorialMedico(historialMedico);
+            }
+            historialMedico.setExamenes(paciente.getExamenes());
+        }
+
+        // Relacionar recetas
+        if (paciente.getRecetas() != null) {
+            for (Receta receta : paciente.getRecetas()) {
+                receta.setPaciente(paciente);
+                receta.setHistorialMedico(historialMedico);
+            }
+            historialMedico.setRecetas(paciente.getRecetas());
+        }
+
+        pacienteRepository.save(paciente); // guarda paciente y todo en cascada
     }
+
 
     @Override
     public Paciente getById(Long id) {
@@ -40,28 +71,28 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
     }
 
     @Override
-    public boolean autorizacionLoginPaciente(String correo, String password) {
-        Optional<Paciente> optPaciente = pacienteRepository.findByCorreo(correo);
-        if (optPaciente.isPresent()) {
-            Paciente usuario = optPaciente.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
-
-    @Override
     public int getIdByRut(String rut) {
         return pacienteRepository.findIdByRut(rut);
     }
 
+    @Override
     public UserType getUserType() {
         return UserType.PACIENTE;
     }
 
+    @Override
+    public long getUserId(String correo) {
+        return pacienteRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Paciente> optPaciente = pacienteRepository.findByCorreo(correo);
-        return optPaciente
+        return pacienteRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
+    }
+    @Override
+    public Paciente getByRut(String rut) {
+        return pacienteRepository.findByRut(rut).orElse(null);
     }
 }
