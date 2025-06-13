@@ -15,5 +15,4 @@ public interface QuimicoFarmaceuticoService{
 
     QuimicoFarmaceutico getById(Long id);
 
-    boolean autorizacionLoginQuimicoFarmaceutico(String correo, String password);
 }

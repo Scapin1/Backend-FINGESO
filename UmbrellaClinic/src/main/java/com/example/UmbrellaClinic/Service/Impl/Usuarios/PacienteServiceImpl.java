@@ -40,27 +40,18 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
     }
 
     @Override
-    public boolean autorizacionLoginPaciente(String correo, String password) {
-        Optional<Paciente> optPaciente = pacienteRepository.findByCorreo(correo);
-        if (optPaciente.isPresent()) {
-            Paciente usuario = optPaciente.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
-
-    @Override
     public int getIdByRut(String rut) {
         return pacienteRepository.findIdByRut(rut);
     }
 
+    @Override
     public UserType getUserType() {
         return UserType.PACIENTE;
     }
 
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Paciente> optPaciente = pacienteRepository.findByCorreo(correo);
-        return optPaciente
+        return pacienteRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }

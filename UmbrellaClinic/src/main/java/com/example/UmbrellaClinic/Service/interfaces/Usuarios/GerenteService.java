@@ -14,5 +14,4 @@ public interface GerenteService {
 
     Gerente getById(Long id);
 
-    boolean autorizacionLoginGerente(String correo, String password);
 }

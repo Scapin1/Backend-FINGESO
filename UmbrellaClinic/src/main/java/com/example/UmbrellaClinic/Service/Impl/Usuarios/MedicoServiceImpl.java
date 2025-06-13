@@ -39,21 +39,13 @@ public class MedicoServiceImpl implements MedicoService, LoginService {
     }
 
     @Override
-    public boolean autorizacionLoginMedico(String correo, String password) {
-        Optional<Medico> optMedico = medicoRepository.findByCorreo(correo);
-        if (optMedico.isPresent()) {
-            Medico usuario = optMedico.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
     public UserType getUserType() {
         return UserType.MEDICO;
     }
 
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Medico> optMedico = medicoRepository.findByCorreo(correo);
-        return optMedico
+        return medicoRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }

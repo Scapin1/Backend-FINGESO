@@ -38,25 +38,18 @@ public class SecretarioServiceImpl implements SecretarioService, LoginService {
         return secretarioRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public boolean autorizacionLoginSecretario(String correo, String password) {
-        Optional<Secretario> optSecretario = secretarioRepository.findByCorreo(correo);
-        if (optSecretario.isPresent()) {
-            Secretario usuario = optSecretario.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
 
+    @Override
     public UserType getUserType() {
         return UserType.SECRETARIO;
     }
 
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Secretario> optSecretario = secretarioRepository.findByCorreo(correo);
-        return optSecretario
+        return secretarioRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }
+
 
 }

@@ -15,7 +15,5 @@ public interface PacienteService {
 
     Paciente getById(Long id);
 
-    boolean autorizacionLoginPaciente(String correo, String password);
-
     int getIdByRut(String rut);
 }

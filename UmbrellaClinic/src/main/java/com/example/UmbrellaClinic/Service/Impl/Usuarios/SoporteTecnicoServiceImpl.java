@@ -39,22 +39,13 @@ public class SoporteTecnicoServiceImpl implements SoporteTecnicoService, LoginSe
     }
 
     @Override
-    public boolean autorizacionLoginSoporteTecnico(String correo, String password) {
-        Optional<SoporteTecnico> optSoporteTecnico = soporteTecnicoRepository.findByCorreo(correo);
-        if (optSoporteTecnico.isPresent()) {
-            SoporteTecnico usuario = optSoporteTecnico.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
-
     public UserType getUserType() {
         return UserType.SOPORTE_TECNICO;
     }
 
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<SoporteTecnico> optSoporteTecnico = soporteTecnicoRepository.findByCorreo(correo);
-        return optSoporteTecnico
+        return soporteTecnicoRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }

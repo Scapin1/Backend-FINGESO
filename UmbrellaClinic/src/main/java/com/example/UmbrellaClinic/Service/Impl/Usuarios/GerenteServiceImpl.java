@@ -36,23 +36,15 @@ public class GerenteServiceImpl implements GerenteService, LoginService {
     public Gerente getById(Long id) {
         return gerenteRepository.getById(id);
     }
-    @Override
-    public boolean autorizacionLoginGerente(String correo, String password) {
-        Optional<Gerente> optGerente = gerenteRepository.findByCorreo(correo);
-        if (optGerente.isPresent()) {
-            Gerente usuario = optGerente.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
 
+    @Override
     public UserType getUserType() {
         return UserType.GERENTE;
     }
 
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Gerente> optGerente = gerenteRepository.findByCorreo(correo);
-        return optGerente
+        return gerenteRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }
