@@ -43,6 +43,11 @@ public class EnfermeroServiceImpl implements EnfermeroService, LoginService {
     }
 
     @Override
+    public long getUserId(String correo) {
+        return enfermeroRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
         return enfermeroRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))

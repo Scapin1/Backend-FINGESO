@@ -43,6 +43,10 @@ public class SecretarioServiceImpl implements SecretarioService, LoginService {
     public UserType getUserType() {
         return UserType.SECRETARIO;
     }
+    @Override
+    public long getUserId(String correo) {
+        return secretarioRepository.findByCorreo(correo).orElse(null).getId();
+    }
 
     @Override
     public boolean authenticate(String correo, String password) {

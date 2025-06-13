@@ -43,6 +43,11 @@ public class GerenteServiceImpl implements GerenteService, LoginService {
     }
 
     @Override
+    public long getUserId(String correo) {
+        return gerenteRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
         return gerenteRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))

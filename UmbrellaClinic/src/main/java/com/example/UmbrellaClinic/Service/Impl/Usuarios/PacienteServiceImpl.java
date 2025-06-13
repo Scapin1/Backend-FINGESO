@@ -50,6 +50,11 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
     }
 
     @Override
+    public long getUserId(String correo) {
+        return pacienteRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
         return pacienteRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))

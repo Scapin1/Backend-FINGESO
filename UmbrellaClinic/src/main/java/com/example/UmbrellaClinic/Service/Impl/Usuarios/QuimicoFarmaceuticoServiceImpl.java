@@ -43,6 +43,10 @@ public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoServic
     public UserType getUserType() {
         return UserType.QUIMICO_FARMACEUTICO;
     }
+    @Override
+    public long getUserId(String correo) {
+        return quimicoFarmaceuticoRepository.findByCorreo(correo).orElse(null).getId();
+    }
 
     @Override
     public boolean authenticate(String correo, String password) {

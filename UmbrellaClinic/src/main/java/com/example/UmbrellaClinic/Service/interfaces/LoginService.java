@@ -5,4 +5,5 @@ public interface LoginService {
 
     boolean authenticate(String correo, String password);
     UserType getUserType();
+    long getUserId(String correo);
 }

@@ -42,6 +42,10 @@ public class MedicoServiceImpl implements MedicoService, LoginService {
     public UserType getUserType() {
         return UserType.MEDICO;
     }
+    @Override
+    public long getUserId(String correo) {
+        return medicoRepository.findByCorreo(correo).orElse(null).getId();
+    }
 
     @Override
     public boolean authenticate(String correo, String password) {

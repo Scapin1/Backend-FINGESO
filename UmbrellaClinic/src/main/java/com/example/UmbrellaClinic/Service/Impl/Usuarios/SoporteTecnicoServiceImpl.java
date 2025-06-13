@@ -42,6 +42,10 @@ public class SoporteTecnicoServiceImpl implements SoporteTecnicoService, LoginSe
     public UserType getUserType() {
         return UserType.SOPORTE_TECNICO;
     }
+    @Override
+    public long getUserId(String correo) {
+        return soporteTecnicoRepository.findByCorreo(correo).orElse(null).getId();
+    }
 
     @Override
     public boolean authenticate(String correo, String password) {

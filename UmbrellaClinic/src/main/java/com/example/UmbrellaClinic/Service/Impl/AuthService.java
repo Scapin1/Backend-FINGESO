@@ -18,7 +18,7 @@ public class AuthService {
         this.loginServices = loginServices;
     }
     public AuthResponse login(LoginRequest request) {
-        return loginServices.stream().filter(svc -> svc.authenticate(request.getCorreo(), request.getPassword())).findFirst().map(svc -> new AuthResponse(svc.getUserType()))
+        return loginServices.stream().filter(svc -> svc.authenticate(request.getCorreo(), request.getPassword())).findFirst().map(svc -> new AuthResponse(svc.getUserType(),svc.getUserId(request.getCorreo())))
                 .orElseThrow(() -> new IllegalArgumentException("Correo o contraseña inválidos"));
     }
 }
