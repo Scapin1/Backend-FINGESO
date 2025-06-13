@@ -25,9 +25,11 @@ public class Medicamento {
     private int stockReal;
     private int stockReceta;
     private String descripcion;
+
+
+    //no es parte de lo que debe tener un medicamento ya que es una relacion
     @ManyToMany(mappedBy = "medicamentosList")
     @JsonIgnore
     private List<Receta> medicamento_receta;
-
 
 }

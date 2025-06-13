@@ -24,7 +24,10 @@ public class MedicamentoController {
     public Medicamento getMedicamento(@PathVariable Long id) {
         return medicamentoService.getById(id);
     }
-
+    @GetMapping("/getMedicamentoPorNombre/{nombre}")
+    public Medicamento getMedicamentoPorNombre(@PathVariable String nombre) {
+        return medicamentoService.getByNombreComercial(nombre);
+    }
     @PostMapping("/crearMedicamento")
     public void crearMedicamento(@RequestBody Medicamento medicamento) {
         medicamentoService.save(medicamento);
@@ -35,17 +38,8 @@ public class MedicamentoController {
         medicamentoService.deleteById(id);
     }
 
-    // Endpoint para actualizar solo los stocks de un medicamento
-    @PutMapping("/{nombreMed}/actualizar-stock")
-    public ResponseEntity<Medicamento> updateMedicamentoStocks(
-            @PathVariable String nombreMed,
-            @RequestParam int stockReal,
-            @RequestParam int stockReceta) {
-        try {
-            Medicamento updatedMedicamento = medicamentoService.updateStocks(nombreMed, stockReal, stockReceta);
-            return new ResponseEntity<>(updatedMedicamento, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PostMapping("/actualizarStockMedicamentos/{nombreComercial}/{tipo}/{cantidad}")
+    public void actualizarStockMedicamentos(@PathVariable String nombreComercial,@PathVariable int tipo,@PathVariable int cantidad) {
+        medicamentoService.actualizarStockMedicamentos(nombreComercial,tipo,cantidad);
     }
 }

@@ -30,9 +30,10 @@ public class RecetaController {
     public Receta getReceta(@PathVariable Long id) {
         return recetaService.getById(id);
     }
+
     @PostMapping("/crearReceta")
-    public void crearReceta(@RequestBody Receta receta) {
-        recetaService.save(receta);
+    public Receta crearReceta(@RequestBody Receta receta) {
+        return recetaService.createReceta(receta);
     }
 
     @DeleteMapping("/eliminarReceta/{id}")

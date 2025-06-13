@@ -13,5 +13,9 @@ public interface MedicamentoService {
 
     Medicamento getById(Long id);
 
-    Medicamento updateStocks(String nombreMed, int newStockReal, int newStockReceta);
+    Medicamento getByNombreComercial(String nombreComercial);
+
+    int reservarStock(long idMedicamento, int cantidad);
+
+    void actualizarStockMedicamentos(String nombreComercial, int tipo, int cantidad);
 }

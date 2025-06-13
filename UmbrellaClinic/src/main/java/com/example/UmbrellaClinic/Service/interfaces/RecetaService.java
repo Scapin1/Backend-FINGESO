@@ -8,7 +8,9 @@ public interface RecetaService {
     List<Receta> findAll();
 
     void deleteById(Long id);
-    Receta save(Receta receta);
+
+    Receta createReceta(Receta receta);
+
     List<Receta> findByPacienteRut(String rut); // Nuevo nombre para el método
 
     Receta getById(Long id);

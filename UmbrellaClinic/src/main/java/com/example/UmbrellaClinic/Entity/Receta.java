@@ -34,7 +34,7 @@ public class Receta {
     @JoinColumn(name = "paciente_id") // Define la columna de clave foránea en la tabla 'receta'
     private Paciente paciente; // El objeto Paciente asociado a esta receta
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "medicamento_receta", // El mismo nombre de tabla de unión
             joinColumns = @JoinColumn(name = "receta_id", referencedColumnName = "idReceta") , // Columna para el ID de Receta en la tabla de unión
@@ -42,7 +42,10 @@ public class Receta {
     )
     private List<Medicamento> medicamentosList;
 
-    //cambios que quiero consultar
+    @Transient
+    private List<Integer> catidadMedicamentos;
+
     private String examenIndicado;
+
     private String diagnostico;
 }
