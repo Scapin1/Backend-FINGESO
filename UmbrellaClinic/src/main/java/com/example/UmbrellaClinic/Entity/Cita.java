@@ -24,6 +24,7 @@ public class Cita {
     private Date fechaCita;
     private String Sucursal;
     private LocalTime HoraCita;
+    private Boolean eliminada = false; //ESTE BOOL CAMBIA CUANDO LA CITA ES ELIMINADA POR EL PACIENTE O MEDICO
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
