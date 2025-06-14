@@ -32,6 +32,10 @@ public class CitaServiceImpl implements CitaService {
     public Cita getById(Long id) {
         return citaRepository.findById(id).orElse(null);
     }
+    @Override
+    public List<Cita> findcitasPendientes(Long userId) {
+        return citaRepository.findCitasPendientesByUserId(userId);
+    }
 
 
 }

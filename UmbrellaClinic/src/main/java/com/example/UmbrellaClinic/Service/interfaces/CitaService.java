@@ -12,4 +12,7 @@ public interface CitaService {
     void save(Cita cita);
 
     Cita getById(Long id);
+
+    List<Cita> findcitasPendientes(Long idUser);
+
 }

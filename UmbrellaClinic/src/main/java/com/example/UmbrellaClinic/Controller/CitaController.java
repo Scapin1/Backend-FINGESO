@@ -37,4 +37,8 @@ public class CitaController {
         }
     }
 
+    @GetMapping("/citasPendientes/{userId}")
+    public List<Cita> getCitasPendientes(@PathVariable("userId") Long userId) {
+        return citaService.findcitasPendientes(userId);
+    }
 }
