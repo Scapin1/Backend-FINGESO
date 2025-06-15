@@ -48,7 +48,7 @@ public class RecetaServiceImpl implements RecetaService {
         HistorialMedico historial = paciente.getHistorialMedico();
 
         List<Medicamento> medicamentos = new ArrayList<>();
-        List<Integer> cantidades = receta.getCatidadMedicamentos();
+        List<Integer> cantidades = receta.getCantidadMedicamentos();
         List<Medicamento> sinStock = new ArrayList<>();
         List<Integer> cantidadesGuardar = new ArrayList<>();
 

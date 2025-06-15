@@ -44,8 +44,8 @@ public class Receta {
     )
     private List<Medicamento> medicamentosList;
 
-    @Transient
-    private List<Integer> catidadMedicamentos;
+    //esto deve estar en una tabla intermedia despues
+    private List<Integer> cantidadMedicamentos;
 
     private String examenIndicado;
 
