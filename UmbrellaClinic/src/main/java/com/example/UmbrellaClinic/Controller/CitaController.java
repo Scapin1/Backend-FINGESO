@@ -28,8 +28,17 @@ public class CitaController {
         citaService.save(cita);
     }
 
-    @DeleteMapping("/eliminarCita/{id}")
+    @PutMapping("/eliminarCita/{id}")
     public void eliminarCita(@PathVariable Long id) {
-        citaService.deleteById(id);
+        Cita cita = citaService.getById(id);
+        if (cita != null) {
+            cita.setEliminada(true); // Cambia el estado de la cita a eliminada
+            citaService.save(cita); // Guarda la cita actualizada
+        }
+    }
+
+    @GetMapping("/citasPendientes/{userId}")
+    public List<Cita> getCitasPendientes(@PathVariable("userId") Long userId) {
+        return citaService.findcitasPendientes(userId);
     }
 }

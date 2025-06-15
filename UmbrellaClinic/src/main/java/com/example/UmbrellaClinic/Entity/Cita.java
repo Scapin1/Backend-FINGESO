@@ -24,6 +24,7 @@ public class Cita {
     private Date fechaCita;
     private String Sucursal;
     private LocalTime HoraCita;
+    private Boolean eliminada = false; //ESTE BOOL CAMBIA CUANDO LA CITA ES ELIMINADA POR EL PACIENTE O MEDICO
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
@@ -33,8 +34,8 @@ public class Cita {
     @JoinColumn(name = "medico_id")
     private Medico medico;
 
-    private boolean agendaPaciente; //ESTE BOOL CAMBIA CUANDO EL PACIENTE LLEGA A LA CITA Y LA SECRETARIA
+    private Boolean agendaPaciente = true; //ESTE BOOL CAMBIA CUANDO EL PACIENTE LLEGA A LA CITA Y LA SECRETARIA
     // CONFIRMA SU LLEGADA O EN SU DEFECTO CUANDO EXPIRA EL PLAZO PARA LLEGAR
-    private boolean agendaMedico;//ESTE BOOL CAMBIA CUANDO EL MEDICO YA REVISO AL PACIENTE
+    private Boolean agendaMedico = true;//ESTE BOOL CAMBIA CUANDO EL MEDICO YA REVISO AL PACIENTE
     //PODRIA DARSE AL MEDICO LA OPCION DE CAMBIAR ESTE VALOR CON UN BOTON O Q SE HAGA AUTOMATICO AL GENERAR LA RECETA
 }
