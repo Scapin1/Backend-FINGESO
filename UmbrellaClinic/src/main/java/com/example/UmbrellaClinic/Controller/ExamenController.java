@@ -32,4 +32,9 @@ public class ExamenController {
     public void eliminarExamen(@PathVariable Long id) {
         examenService.deleteById(id);
     }
+
+    @PostMapping("/prueba")
+    public void prueba(@RequestBody Examen examen) {
+        examenService.crearExamen(examen);
+    }
 }
