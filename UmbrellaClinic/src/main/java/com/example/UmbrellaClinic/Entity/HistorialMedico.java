@@ -32,6 +32,6 @@ public class HistorialMedico {
     private List<Examen> examenes;
 
     @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("historial-examenes")
+    @JsonManagedReference("historial-recetas")
     private List<Receta> recetas;
 }

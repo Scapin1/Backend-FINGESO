@@ -1,8 +1,11 @@
 package com.example.UmbrellaClinic.Service.Impl;
 
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Medicamento;
 import com.example.UmbrellaClinic.Entity.Receta;
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.RecetaRepository;
+import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.MedicamentoService;
 import com.example.UmbrellaClinic.Service.interfaces.RecetaService;
 import jakarta.transaction.Transactional;
@@ -17,8 +20,12 @@ import java.util.List;
 public class RecetaServiceImpl implements RecetaService {
     @Autowired
     private RecetaRepository recetaRepository;
+
     @Autowired
     private MedicamentoService medicamentoService;
+
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
     @Override
     public List<Receta> findAll() {
@@ -33,37 +40,63 @@ public class RecetaServiceImpl implements RecetaService {
 
     @Transactional
     public Receta createReceta(Receta receta) {
+        // Obtener paciente de BD o lanzar excepción si no existe
+        Paciente paciente = pacienteRepository.findById(receta.getPaciente().getId())
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        // Obtener historial médico del paciente
+        HistorialMedico historial = paciente.getHistorialMedico();
+
         List<Medicamento> medicamentos = new ArrayList<>();
         List<Integer> cantidades = receta.getCatidadMedicamentos();
-        List<Medicamento> sinStock= new ArrayList<>();
+        List<Medicamento> sinStock = new ArrayList<>();
         List<Integer> cantidadesGuardar = new ArrayList<>();
+
+        // Validar stock y reservar medicamentos
         for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
             Medicamento medDesdeBD = medicamentoService.getById(receta.getMedicamentosList().get(i).getIdMedicamento());
-
             int cantidad = cantidades.get(i);
-
             int reservado = medicamentoService.reservarStock(medDesdeBD.getIdMedicamento(), cantidad);
 
             if (reservado == 0) {
                 sinStock.add(medDesdeBD);
-            }else{
+            } else {
                 cantidadesGuardar.add(cantidad);
                 medicamentos.add(medDesdeBD);
             }
         }
-        if(!sinStock.isEmpty()){
+
+        // Asociar historial médico y paciente a la receta
+        receta.setHistorialMedico(historial);
+        receta.setPaciente(paciente);
+
+        if (!sinStock.isEmpty()) {
             receta.setMedicamentosSinStock(sinStock);
-            if(receta.getReservarSinSock()){
-                //solo actualiza el stock de los medicamentos que si tienen stock suficiente
-                medicamentoService.actualizarStock(medicamentos,cantidadesGuardar);
-                return recetaRepository.save(receta);
-            }else{
+
+            if (receta.getReservarSinSock()) {
+                // Solo actualiza el stock de los medicamentos que sí tienen stock suficiente
+                medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
+                Receta recetaGuardada = recetaRepository.save(receta);
+                // Agregar receta al historial médico y guardar paciente
+                historial.getRecetas().add(recetaGuardada);
+                pacienteRepository.save(paciente);
+                return recetaGuardada;
+            } else {
                 return receta;
             }
         }
-        medicamentoService.actualizarStock(medicamentos,cantidadesGuardar);
-        return recetaRepository.save(receta);
+
+        // Actualiza stock y guarda receta
+        medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
+        Receta recetaGuardada = recetaRepository.save(receta);
+
+        // Agregar receta al historial médico y guardar paciente
+        historial.getRecetas().add(recetaGuardada);
+        pacienteRepository.save(paciente);
+
+        return recetaGuardada;
     }
+
 
 
 

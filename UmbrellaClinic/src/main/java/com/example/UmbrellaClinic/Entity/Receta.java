@@ -53,7 +53,7 @@ public class Receta {
 
     @ManyToOne
     @JoinColumn(name = "idHistorialMedico")
-    @JsonBackReference("historial-examenes")
+    @JsonBackReference("historial-recetas")
     private HistorialMedico historialMedico;
 
     private Boolean reservarSinSock = false;
