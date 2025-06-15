@@ -55,4 +55,10 @@ public class Receta {
     @JoinColumn(name = "idHistorialMedico")
     @JsonBackReference("historial-examenes")
     private HistorialMedico historialMedico;
+
+    private Boolean reservarSinSock = false;
+
+    @Transient
+    private List<Medicamento> medicamentosSinStock;
+
 }

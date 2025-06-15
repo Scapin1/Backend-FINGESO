@@ -38,9 +38,9 @@ public class MedicamentoController {
         medicamentoService.deleteById(id);
     }
 
-    @PostMapping("/actualizarStockMedicamentos/{nombreComercial}/{tipo}/{cantidad}")
-    public void actualizarStockMedicamentos(@PathVariable String nombreComercial,@PathVariable int tipo,@PathVariable int cantidad) {
-        medicamentoService.actualizarStockMedicamentos(nombreComercial,tipo,cantidad);
+    @PostMapping("/reabastecerMedicamentos/{nombreComercial}/{cantidad}")
+    public void reabastecerMedicamentos(@PathVariable String nombreComercial,@PathVariable int tipo,@PathVariable int cantidad) {
+        medicamentoService.reabastecerMedicamentos(nombreComercial, cantidad);
     }
     //tengo que hacer un metodo para que el quimico entregue un medicamento y de
     // actualicen ambos stock de un medicamento que aparezca en la receta

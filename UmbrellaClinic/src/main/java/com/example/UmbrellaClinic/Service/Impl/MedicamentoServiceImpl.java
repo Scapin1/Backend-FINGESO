@@ -50,21 +50,25 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         int stockReceta = medicamento.getStockReceta();
         int disponible = stockReal - stockReceta;
         if (disponible >= cantidad) {
-            medicamento.setStockReceta(stockReceta + cantidad);
             return 1;
+        }else{
+            return 0;
         }
-        return 0;
     }
 
     @Transactional
-    public void actualizarStockMedicamentos(String nombreComercial, int tipo, int cantidad) {
+    public void actualizarStock(List<Medicamento> medicamentos, List<Integer> cantidades) {
+        for (int i = 0; i < medicamentos.size(); i++) {
+            Medicamento medicamento = medicamentos.get(i);
+            medicamento.setStockReceta(cantidades.get(i));
+        }
+    }
+
+
+    @Transactional
+    public void reabastecerMedicamentos(String nombreComercial, int cantidad) {
         Medicamento medicamento = getByNombreComercial(nombreComercial);
-        if(tipo == 1){//tipo 1 es que va a sumar al stock q ya esta solo manipula el StockReal por ejemplo si le llegaron medicamentos
-            medicamento.setStockReal(medicamento.getStockReal() + cantidad);
-            return;
-        }//si es de otro tipo osea 0 significa que va a actualizar el stock entero por ejemplo en controles de inventario
-        medicamento.setStockReal(cantidad);
-        medicamento.setStockReceta(0);
+        medicamento.setStockReal(medicamento.getStockReal() + cantidad);
     }
 
     @Transactional

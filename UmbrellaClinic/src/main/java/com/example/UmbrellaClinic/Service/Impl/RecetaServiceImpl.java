@@ -35,21 +35,33 @@ public class RecetaServiceImpl implements RecetaService {
     public Receta createReceta(Receta receta) {
         List<Medicamento> medicamentos = new ArrayList<>();
         List<Integer> cantidades = receta.getCatidadMedicamentos();
-
+        List<Medicamento> sinStock= new ArrayList<>();
+        List<Integer> cantidadesGuardar = new ArrayList<>();
         for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
             Medicamento medDesdeBD = medicamentoService.getById(receta.getMedicamentosList().get(i).getIdMedicamento());
+
             int cantidad = cantidades.get(i);
 
             int reservado = medicamentoService.reservarStock(medDesdeBD.getIdMedicamento(), cantidad);
 
             if (reservado == 0) {
-                throw new IllegalStateException("No hay stock disponible para el medicamento: " + medDesdeBD.getNombreComercial());
+                sinStock.add(medDesdeBD);
+            }else{
+                cantidadesGuardar.add(cantidad);
+                medicamentos.add(medDesdeBD);
             }
-
-            medicamentos.add(medDesdeBD);
         }
-
-        receta.setMedicamentosList(medicamentos); // Asignar lista con medicamentos que vienen desde la BD
+        if(!sinStock.isEmpty()){
+            receta.setMedicamentosSinStock(sinStock);
+            if(receta.getReservarSinSock()){
+                //solo actualiza el stock de los medicamentos que si tienen stock suficiente
+                medicamentoService.actualizarStock(medicamentos,cantidadesGuardar);
+                return recetaRepository.save(receta);
+            }else{
+                return receta;
+            }
+        }
+        medicamentoService.actualizarStock(medicamentos,cantidadesGuardar);
         return recetaRepository.save(receta);
     }
 

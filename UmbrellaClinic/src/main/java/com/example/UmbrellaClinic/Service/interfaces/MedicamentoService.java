@@ -17,7 +17,9 @@ public interface MedicamentoService {
 
     int reservarStock(long idMedicamento, int cantidad);
 
-    void actualizarStockMedicamentos(String nombreComercial, int tipo, int cantidad);
+    void reabastecerMedicamentos(String nombreComercial, int cantidad);
 
     void entregarMedicamentos(String nombreComercial, int cantidad);
+
+    void actualizarStock(List<Medicamento> medicamentos, List<Integer> cantidades);
 }
