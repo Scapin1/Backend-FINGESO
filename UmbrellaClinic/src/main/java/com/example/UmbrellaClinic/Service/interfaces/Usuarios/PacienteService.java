@@ -21,4 +21,6 @@ public interface PacienteService {
     Paciente getByRut(String rut);
 
     HistorialMedico getHistorialOrdenado(Long idPaciente);
+
+    void updatePaciente(String nombre, String contraseña, Long id);
 }

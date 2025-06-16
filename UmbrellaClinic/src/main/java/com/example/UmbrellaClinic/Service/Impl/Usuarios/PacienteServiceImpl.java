@@ -117,4 +117,17 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
 
         return historial;
     }
+
+    @Override
+    public void updatePaciente(String nombre, String contraseña, Long id) {
+        // Verifica si el paciente existe
+        Paciente existingPaciente = pacienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+        // Actualiza los campos necesarios
+        existingPaciente.setNombre(nombre);
+        existingPaciente.setPassword(contraseña);
+
+        // Guarda el paciente actualizado
+        pacienteRepository.save(existingPaciente);
+    }
 }

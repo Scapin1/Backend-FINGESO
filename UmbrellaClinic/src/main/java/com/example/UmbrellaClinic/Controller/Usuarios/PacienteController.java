@@ -55,4 +55,8 @@ public class PacienteController {
             return "Historial no encontrado";
         }
     }
+    @PutMapping("/updatePaciente/{id}")
+    public void updatePaciente(@RequestParam String nombre, @RequestParam String contraseña, @PathVariable Long id) {
+        pacienteService.updatePaciente(nombre, contraseña, id);
+    }
 }
