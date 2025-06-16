@@ -59,6 +59,7 @@ public class RecetaServiceImpl implements RecetaService {
             int reservado = medicamentoService.reservarStock(medDesdeBD.getIdMedicamento(), cantidad);
 
             if (reservado == 0) {
+                cantidadesGuardar.add(0);
                 sinStock.add(medDesdeBD);
             } else {
                 cantidadesGuardar.add(cantidad);
@@ -76,6 +77,7 @@ public class RecetaServiceImpl implements RecetaService {
             if (receta.getReservarSinSock()) {
                 // Solo actualiza el stock de los medicamentos que sí tienen stock suficiente
                 medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
+                receta.setCantidadMedicamentos(cantidadesGuardar);
                 Receta recetaGuardada = recetaRepository.save(receta);
                 // Agregar receta al historial médico y guardar paciente
                 historial.getRecetas().add(recetaGuardada);
@@ -97,7 +99,18 @@ public class RecetaServiceImpl implements RecetaService {
         return recetaGuardada;
     }
 
-
+    @Override
+    public void entregarReceta(Long id_receta){
+        Receta receta = getById(id_receta);
+        receta.setEstado(true);
+        List<Medicamento> medicamentos = receta.getMedicamentosList();
+        List<Integer> cantidades = receta.getCantidadMedicamentos();
+        for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
+            String nombreComercial = receta.getMedicamentosList().get(i).getNombreComercial();
+            int cantidad = cantidades.get(i);
+            medicamentoService.entregarMedicamentos(nombreComercial, cantidad);
+        }
+    }
 
 
     @Override

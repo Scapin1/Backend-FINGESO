@@ -14,4 +14,6 @@ public interface RecetaService {
     List<Receta> findByPacienteRut(String rut); // Nuevo nombre para el método
 
     Receta getById(Long id);
+
+    void entregarReceta(Long id_receta);
 }
