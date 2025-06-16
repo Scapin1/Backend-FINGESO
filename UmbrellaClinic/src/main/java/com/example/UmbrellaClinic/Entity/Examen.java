@@ -31,6 +31,7 @@ public class Examen {
 
     @ManyToOne
     @JoinColumn(name = "idEnfermero")
+    @JsonBackReference("enfermero-examenes")
     private Enfermero enfermero;
 
     @ManyToOne

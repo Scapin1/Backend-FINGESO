@@ -27,8 +27,10 @@ public class Receta {
     private String observaciones;
     private Date vigencia;
     private Boolean estado;
+
     @ManyToOne
     @JoinColumn(name = "medico_id") // Clave foránea para Medico
+    @JsonBackReference("medico-recetas")
     private Medico medico;
 
     @ManyToOne

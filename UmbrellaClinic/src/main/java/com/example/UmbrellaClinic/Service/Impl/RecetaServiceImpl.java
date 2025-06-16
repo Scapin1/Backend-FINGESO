@@ -3,8 +3,11 @@ package com.example.UmbrellaClinic.Service.Impl;
 import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Medicamento;
 import com.example.UmbrellaClinic.Entity.Receta;
+import com.example.UmbrellaClinic.Entity.Usuarios.Enfermero;
+import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.RecetaRepository;
+import com.example.UmbrellaClinic.Repository.Usuarios.MedicoRepository;
 import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.MedicamentoService;
 import com.example.UmbrellaClinic.Service.interfaces.RecetaService;
@@ -27,6 +30,9 @@ public class RecetaServiceImpl implements RecetaService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @Autowired
+    private MedicoRepository medicoRepository;
+
     @Override
     public List<Receta> findAll() {
         return recetaRepository.findAll();
@@ -46,6 +52,15 @@ public class RecetaServiceImpl implements RecetaService {
 
         // Obtener historial médico del paciente
         HistorialMedico historial = paciente.getHistorialMedico();
+
+        // Obtener médico
+        if (receta.getMedico() != null && receta.getMedico().getId() != null) {
+            Medico medico = medicoRepository.findById(receta.getMedico().getId())
+                    .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+            receta.setMedico(medico);
+        } else {
+            throw new RuntimeException("Debe asignar un médico válido a la receta");
+        }
 
         List<Medicamento> medicamentos = new ArrayList<>();
         List<Integer> cantidades = receta.getCantidadMedicamentos();
@@ -93,6 +108,11 @@ public class RecetaServiceImpl implements RecetaService {
         // Agregar receta al historial médico y guardar paciente
         historial.getRecetas().add(recetaGuardada);
         pacienteRepository.save(paciente);
+
+        // Agregar receta a la lista de recetas del medico y guardar medico
+        Medico medico = recetaGuardada.getMedico();
+        medico.getRecetas().add(recetaGuardada);
+        medicoRepository.save(medico);
 
         return recetaGuardada;
     }
