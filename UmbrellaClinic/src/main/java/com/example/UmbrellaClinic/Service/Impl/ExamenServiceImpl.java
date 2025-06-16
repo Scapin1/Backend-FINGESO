@@ -36,7 +36,7 @@ public class ExamenServiceImpl implements ExamenService {
     }
 
     @Transactional
-    public Examen crearExamen (Examen examen) {
+    public Examen createExamen (Examen examen) {
         Paciente paciente = pacienteRepository.findById(examen.getPaciente().getId())
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
 

@@ -24,8 +24,8 @@ public class ExamenController {
     }
 
     @PostMapping("/crearExamen")
-    public void crearReceta(@RequestBody Examen examen) {
-        examenService.crearExamen(examen);
+    public void crearExamen(@RequestBody Examen examen) {
+        examenService.createExamen(examen);
     }
 
     @DeleteMapping("/eliminarExamen/{id}")
