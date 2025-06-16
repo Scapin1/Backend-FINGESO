@@ -26,6 +26,7 @@ public class HistorialMedico {
     @OneToOne
     @JoinColumn(name = "idPaciente")
     @JsonIgnoreProperties({"citas", "examenes", "recetas", "historialMedico", "password", "rol"})
+    @JsonBackReference
     private Paciente paciente;
 
     @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
