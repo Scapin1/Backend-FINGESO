@@ -1,10 +1,12 @@
 package com.example.UmbrellaClinic.Controller.Usuarios;
 
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Service.Impl.Usuarios.PacienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -38,11 +40,17 @@ public class PacienteController {
         return pacienteService.getIdByRut(rut);
     }
 
-    @GetMapping("/rut/{rut}/historial")
-    public Object getHistorialPorRut(@PathVariable String rut) {
-        Paciente paciente = pacienteService.getByRut(rut);
-        if (paciente != null && paciente.getHistorialMedico() != null) {
-            return paciente.getHistorialMedico();
+    @GetMapping("/{id}/historial")
+    public Object getHistorialPorId(@PathVariable Long id) {
+        HistorialMedico historial = pacienteService.getHistorialOrdenado(id);
+        if (historial != null) {
+            if (historial.getExamenes() != null) {
+                Collections.reverse(historial.getExamenes());
+            }
+            if (historial.getRecetas() != null) {
+                Collections.reverse(historial.getRecetas());
+            }
+            return historial;
         } else {
             return "Historial no encontrado";
         }

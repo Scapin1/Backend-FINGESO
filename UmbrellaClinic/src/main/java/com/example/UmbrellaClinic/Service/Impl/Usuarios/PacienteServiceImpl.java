@@ -10,7 +10,6 @@ import com.example.UmbrellaClinic.Service.interfaces.LoginService;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 import com.example.UmbrellaClinic.DTOs.UserType;
 
 import java.util.List;
@@ -94,5 +93,28 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
     @Override
     public Paciente getByRut(String rut) {
         return pacienteRepository.findByRut(rut).orElse(null);
+    }
+
+    @Override
+    public HistorialMedico getHistorialOrdenado(Long idPaciente) {
+        Paciente paciente = getById(idPaciente);
+
+        if (paciente == null || paciente.getHistorialMedico() == null) {
+            return null;
+        }
+
+        HistorialMedico historial = paciente.getHistorialMedico();
+
+        // Ordenar exámenes por fechaExamen
+        if (historial.getExamenes() != null) {
+            historial.getExamenes().sort((e1, e2) -> e1.getFechaExamen().compareTo(e2.getFechaExamen()));
+        }
+
+        // Ordenar recetas por fechaEmision
+        if (historial.getRecetas() != null) {
+            historial.getRecetas().sort((r1, r2) -> r1.getFechaEmision().compareTo(r2.getFechaEmision()));
+        }
+
+        return historial;
     }
 }

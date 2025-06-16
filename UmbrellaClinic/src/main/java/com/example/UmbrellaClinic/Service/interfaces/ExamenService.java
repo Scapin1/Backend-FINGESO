@@ -12,4 +12,6 @@ public interface ExamenService {
     void save(Examen examen);
 
     Examen getById(Long id);
+
+    Examen createExamen (Examen examen);
 }

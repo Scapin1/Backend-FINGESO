@@ -29,6 +29,7 @@ public class Receta {
     private Boolean estado = false;//true si esta entregada, false si no se a entregado
     @ManyToOne
     @JoinColumn(name = "medico_id") // Clave foránea para Medico
+    @JsonBackReference("medico-recetas")
     private Medico medico;
 
     @ManyToOne
