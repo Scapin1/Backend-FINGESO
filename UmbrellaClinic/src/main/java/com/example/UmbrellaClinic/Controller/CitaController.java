@@ -41,4 +41,9 @@ public class CitaController {
     public void atendidoPorMedico(@PathVariable Long id) {
         citaService.atendidoPorMedico(id);
     }
+
+    @PutMapping("/llegadaPaciente/{id}")
+    public void llegadaPaciente(@PathVariable Long id) {
+        citaService.llegadaPaciente(id);
+    }
 }

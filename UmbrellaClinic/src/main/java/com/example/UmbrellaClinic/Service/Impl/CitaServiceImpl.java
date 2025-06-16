@@ -5,14 +5,11 @@ import com.example.UmbrellaClinic.Repository.CitaRepository;
 import com.example.UmbrellaClinic.Service.interfaces.CitaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.ResourceTransactionManager;
 
-import java.net.http.HttpConnectTimeoutException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CitaServiceImpl implements CitaService {
@@ -59,6 +56,13 @@ public class CitaServiceImpl implements CitaService {
     public void atendidoPorMedico(Long id){
         Cita cita = citaRepository.getById(id);
         cita.setAgendaMedico(false);
+        citaRepository.save(cita);
+    }
+
+    @Override
+    public void llegadaPaciente(Long id){
+        Cita cita = citaRepository.getById(id);
+        cita.setAgendaPaciente(false);
         citaRepository.save(cita);
     }
 

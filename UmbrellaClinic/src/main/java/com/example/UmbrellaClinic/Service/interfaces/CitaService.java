@@ -16,4 +16,6 @@ public interface CitaService {
     List<Cita> findcitasPendientes(Long idUser);
 
     void atendidoPorMedico(Long id);
+
+    void llegadaPaciente(Long id);
 }
