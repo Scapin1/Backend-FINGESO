@@ -59,6 +59,7 @@ public class CitaServiceImpl implements CitaService {
     public void atendidoPorMedico(Long id){
         Cita cita = citaRepository.getById(id);
         cita.setAgendaMedico(false);
+        citaRepository.save(cita);
     }
 
 }
