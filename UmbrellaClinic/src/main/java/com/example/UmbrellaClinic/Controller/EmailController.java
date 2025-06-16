@@ -13,8 +13,8 @@ public class EmailController {
     EmailService resend;
 
     @PostMapping("/sentEmail")
-    public void sentEmail(@RequestParam String from, @RequestParam String to, @RequestParam String subject, @RequestParam String html) {
-        resend.sentEmail(from, to, subject, html);
+    public void sentEmail(@RequestParam String to, @RequestParam String subject, @RequestParam String fecha, @RequestParam String hora, @RequestParam String servicio,@RequestParam String nombre) {
+        resend.sentEmail(to, subject, fecha, hora, servicio, nombre);
     }
 
 
