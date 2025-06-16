@@ -1,6 +1,7 @@
 package com.example.UmbrellaClinic.Service.interfaces.Usuarios;
 
 
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface PacienteService {
     int getIdByRut(String rut);
 
     Paciente getByRut(String rut);
+
+    HistorialMedico getHistorialOrdenado(Long idPaciente);
 }

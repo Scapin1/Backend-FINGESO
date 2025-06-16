@@ -1,7 +1,6 @@
 package com.example.UmbrellaClinic.Entity;
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Enfermero;
-import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

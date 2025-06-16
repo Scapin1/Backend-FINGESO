@@ -2,6 +2,7 @@ package com.example.UmbrellaClinic.Entity;
 
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class HistorialMedico {
 
     @OneToOne
     @JoinColumn(name = "idPaciente")
-    @JsonBackReference
+    @JsonIgnoreProperties({"citas", "examenes", "recetas", "historialMedico", "password", "rol"})
     private Paciente paciente;
 
     @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
