@@ -7,6 +7,9 @@ import com.resend.services.emails.model.CreateEmailResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class EmailService {
     @Value("${API_CORREO}")
@@ -18,7 +21,6 @@ public class EmailService {
                 + "<html><head><meta charset=\"UTF-8\"><title>Confirmación de Reserva</title></head>"
                 + "<body style=\"font-family: Arial, sans-serif; background-color: #f6f6f6; padding: 20px;\">"
                 + "<div style=\"max-width: 500px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #e0e0e0; padding: 30px;\">"
-                + "<div style=\"text-align: center;\"><img src=\"https://i.ibb.co/jP1bf6NW/logo-clinica.png\" alt=\"logo-clinica\" style=\"max-width: 150px; margin-bottom: 20px;\" /></div>"
                 + "<h2 style=\"color: #2d7ff9;\">¡Reserva Confirmada!</h2>"
                 + "<p>Hola, </p>"
                 + "<p>Tu reserva ha sido confirmada con éxito. Aquí tienes los detalles:</p>"

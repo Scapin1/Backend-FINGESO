@@ -1,7 +1,9 @@
 package com.example.UmbrellaClinic;
 
 import com.example.UmbrellaClinic.Entity.Medicamento;
+import com.example.UmbrellaClinic.Entity.Usuarios.SoporteTecnico;
 import com.example.UmbrellaClinic.Repository.MedicamentoRepository;
+import com.example.UmbrellaClinic.Service.interfaces.Usuarios.SoporteTecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +19,17 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 	@Autowired
 	private MedicamentoRepository medicamentoRepository;
 
+	@Autowired
+	private SoporteTecnicoService soporteTecnicoService;
+
 	public void run(String... args) throws Exception {
+		SoporteTecnico soporte1 = SoporteTecnico.builder()
+				.nombre("Admin")
+				.correo("Admin@umbrella.cl")
+				.rut("99.999.999-9")
+				.password("admin123")
+				.rol("Administrador")
+				.build();
 		Medicamento medicamento1 = Medicamento.builder()
 				.nombreComercial("Paracetamol")
 				.stockReal(15)
@@ -60,6 +72,7 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 				.tipoMedicamento("AINE")
 				.principioActivo("Ácido acetilsalicílico")
 				.build();
+		soporteTecnicoService.save(soporte1);
 		medicamentoRepository.save(medicamento1);
 		medicamentoRepository.save(medicamento2);
 		medicamentoRepository.save(medicamento3);
