@@ -48,7 +48,7 @@ public class RecetaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/entregarReceta/{id_receta}")
+    @PutMapping("/entregarReceta/{id_receta}")
     public void entregarReceta(@PathVariable Long id_receta){
         recetaService.entregarReceta(id_receta);
     }
