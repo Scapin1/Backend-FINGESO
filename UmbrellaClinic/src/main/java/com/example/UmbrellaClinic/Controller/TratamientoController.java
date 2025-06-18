@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tratamiento")
 public class TratamientoController {
+
     @Autowired
     private TratamientoServiceImpl tratamientoService;
 
