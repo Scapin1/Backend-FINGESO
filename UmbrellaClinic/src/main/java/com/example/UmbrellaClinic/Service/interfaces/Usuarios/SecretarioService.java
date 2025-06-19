@@ -15,5 +15,4 @@ public interface SecretarioService {
 
     Secretario getById(Long id);
 
-    boolean autorizacionLoginSecretario(String correo, String password);
 }

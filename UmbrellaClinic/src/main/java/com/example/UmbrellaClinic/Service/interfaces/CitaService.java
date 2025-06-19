@@ -12,4 +12,10 @@ public interface CitaService {
     void save(Cita cita);
 
     Cita getById(Long id);
+
+    List<Cita> findcitasPendientes(Long idUser);
+
+    void atendidoPorMedico(Long id);
+
+    void llegadaPaciente(Long id);
 }

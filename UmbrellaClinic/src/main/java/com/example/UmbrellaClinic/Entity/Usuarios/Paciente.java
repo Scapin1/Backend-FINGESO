@@ -6,6 +6,7 @@ import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Receta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,14 +29,23 @@ public class Paciente extends Usuario {
     @JsonIgnore
     private List<Cita> citas;
 
-    @OneToOne
+    // Al guardar o eliminar el paciente, también se aplican los cambios a su historial.
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "paciente")
+    // Indica que esta lista será incluida normalmente al convertir a JSON, se evitan ciclos infinitos
+    @JsonManagedReference
     private HistorialMedico historialMedico;
 
-    @OneToMany(mappedBy = "paciente")
-    @JsonIgnore
+    // Al guardar o eliminar el paciente, también se aplican los cambios a sus exámenes.
+    // Si se quita un examen de la lista, se elimina automáticamente de la base de datos.
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Indica que esta lista será incluida normalmente al convertir a JSON, se evitan ciclos infinitos
+    @JsonManagedReference
     private List<Examen> examenes;
 
-    @OneToMany(mappedBy = "paciente")
-    @JsonIgnore
-    private List<Receta> recetas; // Una lista de recetas de este paciente
+    // Al guardar o eliminar el paciente, también se aplican los cambios a las recetas.
+    // Si se quita una receta de la lista, se elimina automáticamente de la base de datos.
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Indica que esta lista será incluida normalmente al convertir a JSON, se evitan ciclos infinitos
+    @JsonManagedReference
+    private List<Receta> recetas;
 }

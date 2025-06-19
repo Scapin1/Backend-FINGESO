@@ -38,23 +38,22 @@ public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoServic
     public QuimicoFarmaceutico getById(Long id) {
         return quimicoFarmaceuticoRepository.findById(id).orElse(null);
     }
-    @Override
-    public boolean autorizacionLoginQuimicoFarmaceutico(String correo, String password) {
-        Optional<QuimicoFarmaceutico> optQuimicoFarmaceutico = quimicoFarmaceuticoRepository.findByCorreo(correo);
-        if (optQuimicoFarmaceutico.isPresent()) {
-            QuimicoFarmaceutico usuario = optQuimicoFarmaceutico.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
 
+    @Override
     public UserType getUserType() {
         return UserType.QUIMICO_FARMACEUTICO;
     }
+    @Override
+    public long getUserId(String correo) {
+        return quimicoFarmaceuticoRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<QuimicoFarmaceutico> optQuimicoFarmaceutico = quimicoFarmaceuticoRepository.findByCorreo(correo);
-        return optQuimicoFarmaceutico
+        return quimicoFarmaceuticoRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }
+
+
 }

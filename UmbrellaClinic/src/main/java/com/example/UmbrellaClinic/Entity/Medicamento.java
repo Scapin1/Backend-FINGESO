@@ -3,10 +3,7 @@ package com.example.UmbrellaClinic.Entity;
 import com.example.UmbrellaClinic.Entity.Usuarios.QuimicoFarmaceutico;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Medicamento {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
@@ -23,11 +21,13 @@ public class Medicamento {
     private String principioActivo;
     private String tipoMedicamento;
     private int stockReal;
-    private int stockReceta;
+    private int stockReceta=0;
     private String descripcion;
+
+
+    //no es parte de lo que debe tener un medicamento ya que es una relacion
     @ManyToMany(mappedBy = "medicamentosList")
     @JsonIgnore
     private List<Receta> medicamento_receta;
-
 
 }

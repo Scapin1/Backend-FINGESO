@@ -1,18 +1,15 @@
 package com.example.UmbrellaClinic.DTOs;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
-
+@AllArgsConstructor
 @Getter
-public class    AuthResponse {
+@Setter
+public class AuthResponse {
 
     private UserType userType;
+    private Long id;
 
-    public AuthResponse(UserType userType) {
-        this.userType = userType;
-    }
-
-    public void setUserType(UserType userType){
-        this.userType = userType;
-    }
 }

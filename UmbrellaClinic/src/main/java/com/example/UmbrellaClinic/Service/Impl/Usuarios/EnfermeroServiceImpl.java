@@ -38,22 +38,18 @@ public class EnfermeroServiceImpl implements EnfermeroService, LoginService {
     }
 
     @Override
-    public boolean autorizacionLoginEnfermero(String correo, String password) {
-        Optional<Enfermero> optEnfermero = enfermeroRepository.findByCorreo(correo);
-        if (optEnfermero.isPresent()) {
-            Enfermero usuario = optEnfermero.get();
-            return usuario.getPassword().equals(password);
-        }
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
-
     public UserType getUserType() {
         return UserType.ENFERMERO;
     }
 
+    @Override
+    public long getUserId(String correo) {
+        return enfermeroRepository.findByCorreo(correo).orElse(null).getId();
+    }
+
+    @Override
     public boolean authenticate(String correo, String password) {
-        Optional<Enfermero> optEnfermero = enfermeroRepository.findByCorreo(correo);
-        return optEnfermero
+        return enfermeroRepository.findByCorreo(correo)
                 .map(p -> p.getPassword().equals(password))
                 .orElse(false);
     }

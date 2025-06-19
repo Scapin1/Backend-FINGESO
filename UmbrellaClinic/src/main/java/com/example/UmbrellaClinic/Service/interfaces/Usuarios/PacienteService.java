@@ -1,6 +1,7 @@
 package com.example.UmbrellaClinic.Service.interfaces.Usuarios;
 
 
+import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public interface PacienteService {
 
     Paciente getById(Long id);
 
-    boolean autorizacionLoginPaciente(String correo, String password);
-
     int getIdByRut(String rut);
+
+    Paciente getByRut(String rut);
+
+    HistorialMedico getHistorialOrdenado(Long idPaciente);
+
+    void updatePaciente(String nombre, String contraseña, Long id);
 }

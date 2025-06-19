@@ -13,5 +13,13 @@ public interface MedicamentoService {
 
     Medicamento getById(Long id);
 
-    Medicamento updateStocks(String nombreMed, int newStockReal, int newStockReceta);
+    Medicamento getByNombreComercial(String nombreComercial);
+
+    int reservarStock(long idMedicamento, int cantidad);
+
+    void reabastecerMedicamentos(String nombreComercial, int cantidad);
+
+    void entregarMedicamentos(String nombreComercial, int cantidad);
+
+    void actualizarStock(List<Medicamento> medicamentos, List<Integer> cantidades);
 }
