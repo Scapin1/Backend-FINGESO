@@ -37,9 +37,11 @@ public class ExamenServiceImpl implements ExamenService {
 
     @Transactional
     public Examen createExamen (Examen examen) {
+        // Se busca al paciente asociado al examen
         Paciente paciente = pacienteRepository.findById(examen.getPaciente().getId())
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
 
+        // Se obtiene el historial medico del paciente
         HistorialMedico historial = paciente.getHistorialMedico();
 
         // Asignar historial y paciente al examen
@@ -55,18 +57,19 @@ public class ExamenServiceImpl implements ExamenService {
             throw new RuntimeException("Debe asignar un enfermero válido al examen");
         }
 
-        // Guardar examen
+        // Guardar examen en la BD
         Examen examenGuardado = examenRepository.save(examen);
 
-        // Agregar examen a historial y guardar paciente
+        // Agregar examen a historial del paciente y guardar paciente
         historial.getExamenes().add(examenGuardado);
         pacienteRepository.save(paciente);
 
-        // Agregar examen a la lista de exámenes del enfermero y guardar enfermero
+        // Obtener el enfermero del examen guardado y agregar examen a la lista de exámenes del enfermero y guardar enfermero
         Enfermero enfermero = examenGuardado.getEnfermero();
         enfermero.getExamenList().add(examenGuardado);
         enfermeroRepository.save(enfermero);
 
+        //Retornar el examen guardado
         return examenGuardado;
     }
 

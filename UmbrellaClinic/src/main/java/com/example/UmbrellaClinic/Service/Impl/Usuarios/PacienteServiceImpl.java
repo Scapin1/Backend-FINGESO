@@ -33,13 +33,14 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
 
     @Override
     public void save(Paciente paciente) {
-        // Si no tiene historial médico, se crea
+        // Si el paciente no tiene un historial médico, se crea uno nuevo
         if (paciente.getHistorialMedico() == null) {
             HistorialMedico historial = new HistorialMedico();
             historial.setPaciente(paciente);  // Aquí se enlaza el idPaciente
             paciente.setHistorialMedico(historial);
         }
 
+        // Se obtiene el historial médico
         HistorialMedico historialMedico = paciente.getHistorialMedico();
 
         // Relacionar exámenes
@@ -60,7 +61,8 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
             historialMedico.setRecetas(paciente.getRecetas());
         }
 
-        pacienteRepository.save(paciente); // guarda paciente y todo en cascada
+        //Se guarda el paciente
+        pacienteRepository.save(paciente);
     }
 
 
@@ -97,24 +99,28 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
 
     @Override
     public HistorialMedico getHistorialOrdenado(Long idPaciente) {
+        // Obtener el paciente por su ID
         Paciente paciente = getById(idPaciente);
 
+        // Verificar si el paciente existe y si tiene historial médico
         if (paciente == null || paciente.getHistorialMedico() == null) {
             return null;
         }
 
+        // Obtener el historial médico del paciente
         HistorialMedico historial = paciente.getHistorialMedico();
 
-        // Ordenar exámenes por fechaExamen
+        // Se ordenan los examenes segun su fecha
         if (historial.getExamenes() != null) {
             historial.getExamenes().sort((e1, e2) -> e1.getFechaExamen().compareTo(e2.getFechaExamen()));
         }
 
-        // Ordenar recetas por fechaEmision
+        // Se ordenan las recetas segun su fecha
         if (historial.getRecetas() != null) {
             historial.getRecetas().sort((r1, r2) -> r1.getFechaEmision().compareTo(r2.getFechaEmision()));
         }
 
+        // Retornar el historial con las listas de receta y examenes ordenadas de manera asc
         return historial;
     }
 

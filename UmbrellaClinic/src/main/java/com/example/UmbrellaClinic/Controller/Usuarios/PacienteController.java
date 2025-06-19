@@ -46,7 +46,7 @@ public class PacienteController {
         return pacienteService.getIdByRut(rut);
     }
 
-    // endpoint tipo get para retornar el historial medico del paciente ordenado por id
+    // endpoint tipo get para retornar el historial medico del paciente ordenado desc a travez del id
     @GetMapping("/{id}/historial")
     public Object getHistorialPorId(@PathVariable Long id) {
         HistorialMedico historial = pacienteService.getHistorialOrdenado(id);

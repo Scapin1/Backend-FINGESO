@@ -82,7 +82,7 @@ public class RecetaServiceImpl implements RecetaService {
             }
         }
 
-        // Asociar historial médico y paciente a la receta
+        //Asignar el historial médico del paciente y el paciente a la receta antes de guardarlo.
         receta.setHistorialMedico(historial);
         receta.setPaciente(paciente);
 
@@ -107,7 +107,7 @@ public class RecetaServiceImpl implements RecetaService {
         medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
         Receta recetaGuardada = recetaRepository.save(receta);
 
-        // Agregar receta al historial médico y guardar paciente
+        // Agregar receta al historial médico del paciente y guardar paciente
         historial.getRecetas().add(recetaGuardada);
         pacienteRepository.save(paciente);
 

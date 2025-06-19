@@ -25,15 +25,23 @@ public class HistorialMedico {
 
     @OneToOne
     @JoinColumn(name = "idPaciente")
+    // Se ignoran ciertos atributos del paciente al pasarlo a json
     @JsonIgnoreProperties({"citas", "examenes", "recetas", "historialMedico", "password", "rol"})
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference
     private Paciente paciente;
 
+    // Al guardar o eliminar el historial, también se aplican los cambios a sus exámenes.
+    // Si se quita un examen de la lista, se elimina automáticamente de la base de datos.
     @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Indica que esta lista será incluida normalmente al convertir a JSON, se evitan ciclos infinitos
     @JsonManagedReference("historial-examenes")
     private List<Examen> examenes;
 
+    // Al guardar o eliminar el historial, también se aplican los cambios a sus exámenes.
+    // Si se quita un examen de la lista, se elimina automáticamente de la base de datos.
     @OneToMany(mappedBy = "historialMedico", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Indica que esta lista será incluida normalmente al convertir a JSON, se evitan ciclos infinitos
     @JsonManagedReference("historial-recetas")
     private List<Receta> recetas;
 }

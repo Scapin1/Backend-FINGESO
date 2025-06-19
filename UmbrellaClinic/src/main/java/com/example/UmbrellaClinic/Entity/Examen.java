@@ -25,16 +25,19 @@ public class Examen {
 
     @ManyToOne
     @JoinColumn(name = "idPaciente")
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference
     private Paciente paciente;
 
     @ManyToOne
     @JoinColumn(name = "idEnfermero")
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference("enfermero-examenes")
     private Enfermero enfermero;
 
     @ManyToOne
     @JoinColumn(name = "idHistorialMedico")
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference("historial-examenes") // Nombre único para evitar conflictos
     private HistorialMedico historialMedico;
 }

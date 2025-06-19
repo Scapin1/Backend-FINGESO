@@ -29,11 +29,13 @@ public class Receta {
     private Boolean estado = false;//true si esta entregada, false si no se a entregado
     @ManyToOne
     @JoinColumn(name = "medico_id") // Clave foránea para Medico
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference("medico-recetas")
     private Medico medico;
 
     @ManyToOne
     @JoinColumn(name = "paciente_id") // Define la columna de clave foránea en la tabla 'receta'
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference
     private Paciente paciente; // El objeto Paciente asociado a esta receta
 
@@ -54,6 +56,7 @@ public class Receta {
 
     @ManyToOne
     @JoinColumn(name = "idHistorialMedico")
+    // Al convertir a JSON, este campo será ignorado para evitar referencias cíclicas.
     @JsonBackReference("historial-recetas")
     private HistorialMedico historialMedico;
 
