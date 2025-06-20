@@ -54,4 +54,8 @@ public class MedicoServiceImpl implements MedicoService, LoginService {
                 .orElse(false);
     }
 
+    public Medico findById(Long id) {
+        return medicoRepository.findById(id).orElse(null);
+    }
+
 }

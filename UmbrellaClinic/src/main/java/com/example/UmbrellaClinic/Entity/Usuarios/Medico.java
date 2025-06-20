@@ -3,11 +3,10 @@ package com.example.UmbrellaClinic.Entity.Usuarios;
 import com.example.UmbrellaClinic.Entity.Cita;
 import com.example.UmbrellaClinic.Entity.Examen;
 import com.example.UmbrellaClinic.Entity.Receta;
+import com.example.UmbrellaClinic.Entity.Sucursal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +30,12 @@ public class Medico extends Usuario {
     @OneToMany(mappedBy = "medico")
     @JsonIgnore
     private List<Cita> citasList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "medico_sucursal",
+            joinColumns = @JoinColumn(name = "medico_id"),
+            inverseJoinColumns = @JoinColumn(name = "sucursal_id")
+    )
+    private List<Sucursal> sucursales;
 }

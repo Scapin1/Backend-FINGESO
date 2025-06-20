@@ -15,4 +15,6 @@ public interface MedicoService{
 
     Medico getById(Long id);
 
+    Medico findById(Long id);
+
 }
