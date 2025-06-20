@@ -1,9 +1,7 @@
 package com.example.UmbrellaClinic.Service.Impl;
 
-import com.example.UmbrellaClinic.Entity.HistorialMedico;
 import com.example.UmbrellaClinic.Entity.Medicamento;
 import com.example.UmbrellaClinic.Entity.Receta;
-import com.example.UmbrellaClinic.Entity.Usuarios.Enfermero;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.RecetaRepository;
@@ -43,87 +41,90 @@ public class RecetaServiceImpl implements RecetaService {
         return recetaRepository.findById(id).orElse(null);
     }
 
-
+    // cambiar para que antes de hacer una receta ya sepa el stock de medicamentos
     @Transactional
     public Receta createReceta(Receta receta) {
-        // Obtener paciente de BD o lanzar excepción si no existe
-        Paciente paciente = pacienteRepository.findById(receta.getPaciente().getId())
-                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+        Paciente paciente = obtenerPaciente(receta.getPaciente().getId());
+        Medico medico = obtenerMedico(receta.getMedico().getId());
+        receta.setPaciente(paciente);
+        receta.setMedico(medico);
+        receta.setHistorialMedico(paciente.getHistorialMedico());
 
-        // Obtener historial médico del paciente
-        HistorialMedico historial = paciente.getHistorialMedico();
-
-        // Obtener médico
-        if (receta.getMedico() != null && receta.getMedico().getId() != null) {
-            Medico medico = medicoRepository.findById(receta.getMedico().getId())
-                    .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
-            receta.setMedico(medico);
-        } else {
-            throw new RuntimeException("Debe asignar un médico válido a la receta");
-        }
-
-        List<Medicamento> medicamentos = new ArrayList<>();
-        List<Integer> cantidades = receta.getCantidadMedicamentos();
         List<Medicamento> sinStock = new ArrayList<>();
         List<Integer> cantidadesGuardar = new ArrayList<>();
+        List<Medicamento> disponibles = verificarYReservarMedicamentos(
+                receta.getMedicamentosList(),
+                receta.getCantidadMedicamentos(),
+                sinStock,
+                cantidadesGuardar
+        );
 
-        // Validar stock y reservar medicamentos
-        for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
-            Medicamento medDesdeBD = medicamentoService.getById(receta.getMedicamentosList().get(i).getIdMedicamento());
+        if (!sinStock.isEmpty()) {
+            return guardarRecetaConFaltantes(receta, disponibles, cantidadesGuardar, sinStock);
+        }
+
+        return guardarRecetaCompleta(receta, disponibles, cantidadesGuardar);
+    }
+
+    private Receta guardarRecetaCompleta(Receta receta, List<Medicamento> disponibles,
+                                         List<Integer> cantidadesGuardar) {
+        medicamentoService.actualizarStock(disponibles, cantidadesGuardar);
+        receta.setCantidadMedicamentos(cantidadesGuardar);
+        Receta recetaGuardada = recetaRepository.save(receta);
+        receta.getHistorialMedico().getRecetas().add(recetaGuardada);
+        pacienteRepository.save(receta.getPaciente());
+        recetaGuardada.getMedico().getRecetas().add(recetaGuardada);
+        medicoRepository.save(recetaGuardada.getMedico());
+        return recetaGuardada;
+    }
+
+    private Receta guardarRecetaConFaltantes(Receta receta, List<Medicamento> disponibles,
+                                             List<Integer> cantidadesGuardar, List<Medicamento> sinStock) {
+        receta.setMedicamentosSinStock(sinStock);
+        if (receta.getReservarSinSock()) {
+            medicamentoService.actualizarStock(disponibles, cantidadesGuardar);
+            receta.setCantidadMedicamentos(cantidadesGuardar);
+            Receta recetaGuardada = recetaRepository.save(receta);
+            receta.getHistorialMedico().getRecetas().add(recetaGuardada);
+            pacienteRepository.save(receta.getPaciente());
+            return recetaGuardada;
+        }
+        return receta;
+    }
+
+    private List<Medicamento> verificarYReservarMedicamentos(List<Medicamento> meds, List<Integer> cantidades,
+                                                             List<Medicamento> sinStock, List<Integer> cantidadesGuardar) {
+        List<Medicamento> disponibles = new ArrayList<>();
+        for (int i = 0; i < meds.size(); i++) {
+            Medicamento medDesdeBD = medicamentoService.getById(meds.get(i).getIdMedicamento());
             int cantidad = cantidades.get(i);
             int reservado = medicamentoService.reservarStock(medDesdeBD.getIdMedicamento(), cantidad);
-
             if (reservado == 0) {
                 cantidadesGuardar.add(0);
                 sinStock.add(medDesdeBD);
             } else {
                 cantidadesGuardar.add(cantidad);
-                medicamentos.add(medDesdeBD);
+                disponibles.add(medDesdeBD);
             }
         }
-
-        //Asignar el historial médico del paciente y el paciente a la receta antes de guardarlo.
-        receta.setHistorialMedico(historial);
-        receta.setPaciente(paciente);
-
-        if (!sinStock.isEmpty()) {
-            receta.setMedicamentosSinStock(sinStock);
-
-            if (receta.getReservarSinSock()) {
-                // Solo actualiza el stock de los medicamentos que sí tienen stock suficiente
-                medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
-                receta.setCantidadMedicamentos(cantidadesGuardar);
-                Receta recetaGuardada = recetaRepository.save(receta);
-                // Agregar receta al historial médico y guardar paciente
-                historial.getRecetas().add(recetaGuardada);
-                pacienteRepository.save(paciente);
-                return recetaGuardada;
-            } else {
-                return receta;
-            }
-        }
-
-        // Actualiza stock y guarda receta
-        medicamentoService.actualizarStock(medicamentos, cantidadesGuardar);
-        Receta recetaGuardada = recetaRepository.save(receta);
-
-        // Agregar receta al historial médico del paciente y guardar paciente
-        historial.getRecetas().add(recetaGuardada);
-        pacienteRepository.save(paciente);
-
-        // Agregar receta a la lista de recetas del medico y guardar medico
-        Medico medico = recetaGuardada.getMedico();
-        medico.getRecetas().add(recetaGuardada);
-        medicoRepository.save(medico);
-
-        return recetaGuardada;
+        return disponibles;
     }
+
+    private Paciente obtenerPaciente(Long pacienteId) {
+        return pacienteRepository.findById(pacienteId)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+    }
+
+    private Medico obtenerMedico(Long medicoId) {
+        return medicoRepository.findById(medicoId)
+                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+    }
+
 
     @Override
     public void entregarReceta(Long id_receta){
         Receta receta = getById(id_receta);
         receta.setEstado(true);
-        List<Medicamento> medicamentos = receta.getMedicamentosList();
         List<Integer> cantidades = receta.getCantidadMedicamentos();
         for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
             String nombreComercial = receta.getMedicamentosList().get(i).getNombreComercial();
