@@ -1,8 +1,10 @@
 package com.example.UmbrellaClinic;
 
 import com.example.UmbrellaClinic.Entity.Medicamento;
+import com.example.UmbrellaClinic.Entity.Sucursal;
 import com.example.UmbrellaClinic.Entity.Usuarios.SoporteTecnico;
 import com.example.UmbrellaClinic.Repository.MedicamentoRepository;
+import com.example.UmbrellaClinic.Repository.SucursalRepository;
 import com.example.UmbrellaClinic.Service.interfaces.Usuarios.SoporteTecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +23,9 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 
 	@Autowired
 	private SoporteTecnicoService soporteTecnicoService;
+
+	@Autowired
+	private SucursalRepository sucursalRepository;
 
 	public void run(String... args) throws Exception {
 		SoporteTecnico soporte1 = SoporteTecnico.builder()
@@ -72,6 +77,20 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 				.tipoMedicamento("AINE")
 				.principioActivo("Ácido acetilsalicílico")
 				.build();
+		Sucursal sucursal1 = Sucursal.builder()
+				.nombreSucursal("Sucursal Norte")
+				.direccion("912 West Birkin Boulevard, Raccoon City, RC 50214")
+				.build();
+
+		Sucursal sucursal2 = Sucursal.builder()
+				.nombreSucursal("Sucursal Centro")
+				.direccion("300 Spencer Lane, Medical District, Raccoon City, RC 50211")
+				.build();
+
+		Sucursal sucursal3 = Sucursal.builder()
+				.nombreSucursal("Sucursal Sur")
+				.direccion("77 Cain Street, Central District, Raccoon City, RC 50209")
+				.build();
 		soporteTecnicoService.save(soporte1);
 		medicamentoRepository.save(medicamento1);
 		medicamentoRepository.save(medicamento2);
@@ -79,5 +98,8 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 		medicamentoRepository.save(medicamento4);
 		medicamentoRepository.save(medicamento5);
 		medicamentoRepository.save(medicamento6);
+		sucursalRepository.save(sucursal1);
+		sucursalRepository.save(sucursal2);
+		sucursalRepository.save(sucursal3);
 	}
 }

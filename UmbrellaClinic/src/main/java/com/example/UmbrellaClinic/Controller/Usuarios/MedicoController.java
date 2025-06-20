@@ -1,5 +1,6 @@
 package com.example.UmbrellaClinic.Controller.Usuarios;
 
+import com.example.UmbrellaClinic.Entity.Sucursal;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Service.Impl.Usuarios.MedicoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class MedicoController {
     @DeleteMapping("/eliminarMedico/{id}")
     public void eliminarMedico(@PathVariable Long id) {
         medicoService.deleteById(id);
+    }
+
+    @GetMapping("/{id}/sucursales")
+    public List<Sucursal> getSucursalesByMedico(@PathVariable Long id) {
+        Medico medico = medicoService.findById(id);
+        return medico.getSucursales();
     }
 }
