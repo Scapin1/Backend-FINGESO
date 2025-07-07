@@ -1,6 +1,8 @@
 package com.example.UmbrellaClinic.Service.Impl;
 
 import com.example.UmbrellaClinic.Entity.Cita;
+import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
+import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.CitaRepository;
 import com.example.UmbrellaClinic.Service.interfaces.CitaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,11 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public void save(Cita cita) {
+        Paciente paciente = cita.getPaciente();
+        Medico medico = cita.getMedico();
+        if(medico.getRut().equals(paciente.getRut())) {
+            throw new IllegalArgumentException("Un médico no puede agendarse a sí mismo.");
+        }
         citaRepository.save(cita);
     }
 

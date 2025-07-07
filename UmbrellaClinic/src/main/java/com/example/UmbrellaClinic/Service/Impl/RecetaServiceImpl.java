@@ -46,6 +46,9 @@ public class RecetaServiceImpl implements RecetaService {
     public Receta createReceta(Receta receta) {
         Paciente paciente = obtenerPaciente(receta.getPaciente().getId());
         Medico medico = obtenerMedico(receta.getMedico().getId());
+        if(medico.getRut().equals(paciente.getRut())) {
+            throw new IllegalArgumentException("Un médico no puede recetarse a sí mismo.");
+        }
         receta.setPaciente(paciente);
         receta.setMedico(medico);
         receta.setHistorialMedico(paciente.getHistorialMedico());

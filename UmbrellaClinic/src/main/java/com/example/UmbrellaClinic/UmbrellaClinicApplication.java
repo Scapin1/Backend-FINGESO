@@ -30,7 +30,7 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		SoporteTecnico soporte1 = SoporteTecnico.builder()
 				.nombre("Admin")
-				.correo("Admin@umbrella.cl")
+				.correo("admin@umbrella.cl")
 				.rut("99.999.999-9")
 				.password("admin123")
 				.rol("Administrador")
