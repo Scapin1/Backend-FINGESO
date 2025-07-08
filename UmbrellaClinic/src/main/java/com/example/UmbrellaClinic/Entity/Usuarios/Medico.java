@@ -20,7 +20,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Medico extends Usuario {
-
     private String especialidad;
 
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
