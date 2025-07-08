@@ -58,7 +58,7 @@ public class UmbrellaClinicApplication implements CommandLineRunner {
 				.build();
 		Medicamento medicamento4 = Medicamento.builder()
 				.nombreComercial("Loratadina")
-				.stockReal(25)
+				.stockReal(0)
 				.descripcion("Antihistamínico para aliviar los síntomas de alergias.")
 				.tipoMedicamento("Antihistamínico")
 				.principioActivo("Loratadina")

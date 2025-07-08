@@ -4,7 +4,6 @@ package com.example.UmbrellaClinic.Entity;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
