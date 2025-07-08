@@ -28,7 +28,7 @@ public class EmailController {
             @RequestParam String servicio,
             @RequestParam String nombre
     ) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         LocalDate fechaConvertida = LocalDate.parse(fecha, formato);
 
