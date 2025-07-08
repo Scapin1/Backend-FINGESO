@@ -4,6 +4,7 @@ import com.example.UmbrellaClinic.Entity.Cita;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.CitaRepository;
+import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.CitaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class CitaServiceImpl implements CitaService {
     @Autowired
     private CitaRepository citaRepository;
+
+    @Autowired
+    private PacienteRepository pacienteRepository;
+
     @Override
     public List<Cita> findAll() {
         return citaRepository.findAll();
@@ -32,10 +38,12 @@ public class CitaServiceImpl implements CitaService {
                 throw new RuntimeException("No se puede eliminar una cita con menos de 30 minutos de antelación.");
             }else{
                 cita.setEliminada(true); // Cambia el estado de la cita a eliminada
+                cita.setDisponible(true);
                 citaRepository.save(cita); // Guarda la cita actualizada
             }
         }else{
             cita.setEliminada(true); // Cambia el estado de la cita a eliminada
+            cita.setDisponible(true);
             citaRepository.save(cita); // Guarda la cita actualizada
         }
     }
@@ -73,4 +81,41 @@ public class CitaServiceImpl implements CitaService {
         citaRepository.save(cita);
     }
 
+    @Override
+    public Cita crearCitaDisponible(Date fecha, LocalTime hora, String sucursal, Medico medico) {
+        Cita cita = new Cita();
+        cita.setFechaCita(fecha);
+        cita.setHoraCita(hora);
+        cita.setSucursal(sucursal);
+        cita.setMedico(medico);
+        cita.setDisponible(true);
+        cita.setEliminada(false);
+        cita.setAgendaMedico(true);
+        cita.setAgendaPaciente(true);
+        return citaRepository.save(cita);
+    }
+
+    @Override
+    public List<Cita> findDisponiblesByMedicoId(Long idMedico) {
+        return citaRepository.findDisponiblesByMedicoId(idMedico);
+    }
+
+    @Override
+    public void asignarPacienteACita(Long idCita, Long idPaciente) {
+        Cita cita = getById(idCita);
+        if (cita == null) {
+            throw new RuntimeException("Cita no encontrada.");
+        }
+
+        if (!cita.getDisponible()) {
+            throw new RuntimeException("La cita ya está reservada.");
+        }
+
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        cita.setPaciente(paciente);
+        cita.setDisponible(false);
+        citaRepository.save(cita);
+    }
 }

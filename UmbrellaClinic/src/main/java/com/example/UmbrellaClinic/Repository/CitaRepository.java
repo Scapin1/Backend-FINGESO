@@ -19,4 +19,12 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
          AND c.agendaMedico    = TRUE
     """)
     List<Cita> findCitasPendientesByUserId(@Param("userId") Long userId);
+
+    @Query("""
+    SELECT c FROM Cita c
+    WHERE c.disponible = true
+      AND c.eliminada = false
+      AND c.medico.id = :idMedico
+""")
+    List<Cita> findDisponiblesByMedicoId(@Param("idMedico") Long idMedico);
 }
