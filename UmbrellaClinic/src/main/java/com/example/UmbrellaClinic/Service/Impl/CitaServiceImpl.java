@@ -31,8 +31,6 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public void deleteById(Long id) {
         Cita cita = citaRepository.getById(id);
-        System.out.println(cita.getFechaCita());
-        System.out.println(LocalDate.now());
         if(LocalDate.now().equals(LocalDate.ofInstant(cita.getFechaCita().toInstant(), ZoneId.systemDefault()))) {
             if(cita.getHoraCita().minusMinutes(30).isBefore(LocalTime.now())){
                 throw new RuntimeException("No se puede eliminar una cita con menos de 30 minutos de antelación.");

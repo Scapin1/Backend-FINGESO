@@ -37,8 +37,7 @@ public class EmailService {
                 .html(html)
                 .build();
         try {
-            CreateEmailResponse data = resend.emails().send(params);
-            System.out.println(data.getId());
+            resend.emails().send(params);
         } catch (ResendException e) {
             e.printStackTrace();
         }
