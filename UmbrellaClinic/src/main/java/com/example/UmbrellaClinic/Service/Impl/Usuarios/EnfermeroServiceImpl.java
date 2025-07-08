@@ -29,6 +29,7 @@ public class EnfermeroServiceImpl implements EnfermeroService, LoginService {
 
     @Override
     public void save(Enfermero enfermero) {
+        enfermero.setCorreo(enfermero.getCorreo().toLowerCase());
         enfermeroRepository.save(enfermero);
     }
 

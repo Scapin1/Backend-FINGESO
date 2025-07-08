@@ -62,6 +62,7 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
         }
 
         //Se guarda el paciente
+        paciente.setCorreo(paciente.getCorreo().toLowerCase());
         pacienteRepository.save(paciente);
     }
 

@@ -29,6 +29,7 @@ public class GerenteServiceImpl implements GerenteService, LoginService {
 
     @Override
     public void save(Gerente gerente) {
+        gerente.setCorreo(gerente.getCorreo().toLowerCase());
         gerenteRepository.save(gerente);
     }
 

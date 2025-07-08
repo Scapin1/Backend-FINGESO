@@ -30,6 +30,7 @@ public class MedicoServiceImpl implements MedicoService, LoginService {
 
     @Override
     public void save(Medico medico) {
+        medico.setCorreo(medico.getCorreo().toLowerCase());
         medicoRepository.save(medico);
     }
 

@@ -31,6 +31,7 @@ public class QuimicoFarmaceuticoServiceImpl implements QuimicoFarmaceuticoServic
 
     @Override
     public void save(QuimicoFarmaceutico quimicoFarmaceutico) {
+        quimicoFarmaceutico.setCorreo(quimicoFarmaceutico.getCorreo().toLowerCase());
         quimicoFarmaceuticoRepository.save(quimicoFarmaceutico);
     }
 

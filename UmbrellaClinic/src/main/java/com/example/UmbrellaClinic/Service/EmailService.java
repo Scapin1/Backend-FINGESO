@@ -6,10 +6,6 @@ import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 public class EmailService {
     @Value("${API_CORREO}")
