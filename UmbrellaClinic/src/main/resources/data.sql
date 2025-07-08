@@ -120,3 +120,55 @@ INSERT INTO sucursal (id_sucursal, nombre_sucursal, direccion) VALUES
                                                           (1, 'Sucursal Norte', '912 West Birkin Boulevard, Raccoon City, RC 50214'),
                                                           (2, 'Sucursal Centro', '300 Spencer Lane, Medical District, Raccoon City, RC 50211'),
                                                           (3, 'Sucursal Sur', '77 Cain Street, Central District, Raccoon City, RC 50209');
+
+-- Insertar Pacientes en Historial Médico
+INSERT INTO historial_medico (id_historial_medico, id_paciente) VALUES
+                                                             (1, 11),
+                                                             (2, 12),
+                                                             (3, 13),
+                                                             (4, 14),
+                                                             (5, 15),
+                                                             (6, 16),
+                                                             (7, 17),
+                                                             (8, 18),
+                                                             (9, 19),
+                                                             (10, 20);
+
+-- insertar medicos en sucursales
+INSERT INTO medico_sucursal (medico_id, sucursal_id) VALUES
+                                                                                  (1, 1),
+                                                                                  (2, 1),
+                                                                                  (3, 2),
+                                                                                  (4, 2),
+                                                                                  (5, 3),
+                                                                                  (6, 3),
+                                                                                  (7, 1),
+                                                                                  (8, 2),
+                                                                                  (9, 3),
+                                                                                  (10, 1);
+
+-- Insertar Enfermeros en Sucursales
+INSERT INTO enfermero_sucursal (enfermero_id, sucursal_id) VALUES
+                                                                                  (21, 1),
+                                                                                  (22, 1),
+                                                                                  (23, 2),
+                                                                                  (24, 2),
+                                                                                  (25, 3),
+                                                                                  (26, 3),
+                                                                                  (27, 1),
+                                                                                  (28, 2),
+                                                                                  (29, 3),
+                                                                                  (30, 1);
+
+-- Insertar Gerentes en Sucursales
+INSERT INTO gerente_sucursal (gerente_id, sucursal_id) VALUES
+                                                                                  (31, 1),
+                                                                                  (32, 1),
+                                                                                  (33, 2),
+                                                                                  (34, 2),
+                                                                                  (35, 3),
+                                                                                  (36, 3),
+                                                                                  (37, 1),
+                                                                                  (38, 2),
+                                                                                  (39, 3),
+                                                                                  (40, 1);
