@@ -9,7 +9,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/secretario")
-public class SecretarioController {
+public class    SecretarioController {
     // inyectar dependencias para conectar con la logica de negocios
     @Autowired
     private SecretarioServiceImpl secretarioService;

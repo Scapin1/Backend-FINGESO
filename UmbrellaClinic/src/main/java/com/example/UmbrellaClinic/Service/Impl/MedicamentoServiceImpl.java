@@ -66,14 +66,14 @@ public class MedicamentoServiceImpl implements MedicamentoService {
 
 
     @Transactional
-    public void reabastecerMedicamentos(String nombreComercial, int cantidad) {
-        Medicamento medicamento = getByNombreComercial(nombreComercial);
+    public void reabastecerMedicamentos(Long id, int cantidad) {
+        Medicamento medicamento = getById(id);
         medicamento.setStockReal(medicamento.getStockReal() + cantidad);
     }
 
     @Transactional
-    public void entregarMedicamentos(String nombreComercial, int cantidad) {
-        Medicamento medicamento = getByNombreComercial(nombreComercial);
+    public void entregarMedicamentos(Long id, int cantidad) {
+        Medicamento medicamento = getById(id);
         medicamento.setStockReal(medicamento.getStockReal() - cantidad);
         medicamento.setStockReceta(medicamento.getStockReceta() - cantidad);
     }

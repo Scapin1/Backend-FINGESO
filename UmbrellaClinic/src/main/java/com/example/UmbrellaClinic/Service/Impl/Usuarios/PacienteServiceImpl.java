@@ -32,7 +32,7 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
     }
 
     @Override
-    public void save(Paciente paciente) {
+    public Paciente save(Paciente paciente) {
         // Si el paciente no tiene un historial médico, se crea uno nuevo
         if (paciente.getHistorialMedico() == null) {
             HistorialMedico historial = new HistorialMedico();
@@ -62,7 +62,8 @@ public class PacienteServiceImpl implements PacienteService, LoginService {
         }
 
         //Se guarda el paciente
-        pacienteRepository.save(paciente);
+        paciente.setCorreo(paciente.getCorreo().toLowerCase());
+        return pacienteRepository.save(paciente);
     }
 
 

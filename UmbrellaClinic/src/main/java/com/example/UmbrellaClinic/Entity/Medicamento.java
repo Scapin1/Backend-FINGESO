@@ -29,5 +29,7 @@ public class Medicamento {
     @ManyToMany(mappedBy = "medicamentosList")
     @JsonIgnore
     private List<Receta> medicamento_receta;
+    private String gramageMl;
+    private String laboratorio;
 
 }

@@ -42,14 +42,14 @@ public class MedicamentoController {
 
     //estos ultimos dos deverian ser PUT no post
 
-    // endpoint del tipo post para reabastecer un medicamentos a partir de su nombre comercial y una cantidad de medicamento que llega a bodega
-    @PostMapping("/reabastecerMedicamentos/{nombreComercial}/{cantidad}")
-    public void reabastecerMedicamentos(@PathVariable String nombreComercial,@PathVariable int tipo,@PathVariable int cantidad) {
-        medicamentoService.reabastecerMedicamentos(nombreComercial, cantidad);
+    // endpoint del tipo put para reabastecer un medicamentos a partir de su nombre comercial y una cantidad de medicamento que llega a bodega
+    @PutMapping("/reabastecerMedicamentos/{id}/{cantidad}")
+    public void reabastecerMedicamentos(@PathVariable Long id,@PathVariable int cantidad) {
+        medicamentoService.reabastecerMedicamentos(id, cantidad);
     }
     // endpoint tipo Post para entregar un medicamento/s a un paciente
-    @PostMapping("/entregarMedicamentos/{nombreComercial}/{cantidad}")
-    public  void entregarMedicamentos(@PathVariable String nombreComercial,@PathVariable int cantidad) {
-        medicamentoService.entregarMedicamentos(nombreComercial,cantidad);
+    @PutMapping("/entregarMedicamentos/{id}/{cantidad}")
+    public  void entregarMedicamentos(@PathVariable Long id,@PathVariable int cantidad) {
+        medicamentoService.entregarMedicamentos(id,cantidad);
     }
 }

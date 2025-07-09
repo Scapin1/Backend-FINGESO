@@ -30,6 +30,7 @@ public class SoporteTecnicoServiceImpl implements SoporteTecnicoService, LoginSe
 
     @Override
     public void save(SoporteTecnico soporteTecnico) {
+        soporteTecnico.setCorreo(soporteTecnico.getCorreo().toLowerCase());
         soporteTecnicoRepository.save(soporteTecnico);
     }
 

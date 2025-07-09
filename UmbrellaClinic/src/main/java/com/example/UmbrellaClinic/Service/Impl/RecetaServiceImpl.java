@@ -46,6 +46,9 @@ public class RecetaServiceImpl implements RecetaService {
     public Receta createReceta(Receta receta) {
         Paciente paciente = obtenerPaciente(receta.getPaciente().getId());
         Medico medico = obtenerMedico(receta.getMedico().getId());
+        if(medico.getRut().equals(paciente.getRut())) {
+            throw new IllegalArgumentException("Un médico no puede recetarse a sí mismo.");
+        }
         receta.setPaciente(paciente);
         receta.setMedico(medico);
         receta.setHistorialMedico(paciente.getHistorialMedico());
@@ -127,9 +130,9 @@ public class RecetaServiceImpl implements RecetaService {
         receta.setEstado(true);
         List<Integer> cantidades = receta.getCantidadMedicamentos();
         for (int i = 0; i < receta.getMedicamentosList().size(); i++) {
-            String nombreComercial = receta.getMedicamentosList().get(i).getNombreComercial();
+            Long id = receta.getMedicamentosList().get(i).getIdMedicamento();
             int cantidad = cantidades.get(i);
-            medicamentoService.entregarMedicamentos(nombreComercial, cantidad);
+            medicamentoService.entregarMedicamentos(id, cantidad);
         }
     }
 

@@ -30,6 +30,7 @@ public class SecretarioServiceImpl implements SecretarioService, LoginService {
 
     @Override
     public void save(Secretario secretario) {
+        secretario.setCorreo(secretario.getCorreo().toLowerCase());
         secretarioRepository.save(secretario);
     }
 

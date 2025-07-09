@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -38,4 +38,7 @@ public class Cita {
     // CONFIRMA SU LLEGADA O EN SU DEFECTO CUANDO EXPIRA EL PLAZO PARA LLEGAR
     private Boolean agendaMedico = true;//ESTE BOOL CAMBIA CUANDO EL MEDICO YA REVISO AL PACIENTE
     //PODRIA DARSE AL MEDICO LA OPCION DE CAMBIAR ESTE VALOR CON UN BOTON O Q SE HAGA AUTOMATICO AL GENERAR LA RECETA
+
+    private Boolean disponible = true;
+
 }
