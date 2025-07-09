@@ -82,7 +82,7 @@ public class CitaController {
         List<Cita> disponibles = citaService.findDisponiblesByMedicoId(idMedico);
         return ResponseEntity.ok(disponibles);
     }
-    @PostMapping("/reservar/{idCita}/paciente/{idPaciente}")
+    @PutMapping("/reservar/{idCita}/paciente/{idPaciente}")
     public ResponseEntity<String> reservarCita(
             @PathVariable Long idCita,
             @PathVariable Long idPaciente

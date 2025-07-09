@@ -6,9 +6,11 @@ import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.example.UmbrellaClinic.Repository.CitaRepository;
 import com.example.UmbrellaClinic.Repository.Usuarios.PacienteRepository;
 import com.example.UmbrellaClinic.Service.interfaces.CitaService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -53,6 +55,7 @@ public class CitaServiceImpl implements CitaService {
         if(medico.getRut().equals(paciente.getRut())) {
             throw new IllegalArgumentException("Un médico no puede agendarse a sí mismo.");
         }
+        cita.setDisponible(false);
         citaRepository.save(cita);
     }
 
@@ -79,7 +82,6 @@ public class CitaServiceImpl implements CitaService {
         citaRepository.save(cita);
     }
 
-    @Override
     public Cita crearCitaDisponible(Date fecha, LocalTime hora, String sucursal, Medico medico) {
         Cita cita = new Cita();
         cita.setFechaCita(fecha);
@@ -97,10 +99,9 @@ public class CitaServiceImpl implements CitaService {
     public List<Cita> findDisponiblesByMedicoId(Long idMedico) {
         return citaRepository.findDisponiblesByMedicoId(idMedico);
     }
-
-    @Override
+    @Transactional
     public void asignarPacienteACita(Long idCita, Long idPaciente) {
-        Cita cita = getById(idCita);
+        Cita cita = citaRepository.getById(idCita);
         if (cita == null) {
             throw new RuntimeException("Cita no encontrada.");
         }

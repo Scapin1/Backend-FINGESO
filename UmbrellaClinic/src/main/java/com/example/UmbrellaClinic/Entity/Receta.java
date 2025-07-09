@@ -4,6 +4,7 @@ package com.example.UmbrellaClinic.Entity;
 import com.example.UmbrellaClinic.Entity.Usuarios.Medico;
 import com.example.UmbrellaClinic.Entity.Usuarios.Paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +23,10 @@ public class Receta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReceta;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
     private Date fechaEmision;
     private String observaciones;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
     private Date vigencia;
     private Boolean estado = false;//true si esta entregada, false si no se a entregado
     @ManyToOne
@@ -49,6 +52,7 @@ public class Receta {
     //esto deve estar en una tabla intermedia despues
     private List<Integer> cantidadMedicamentos;
 
+    @Column(name = "examen_indicado")
     private String examenIndicado;
 
     private String diagnostico;

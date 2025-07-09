@@ -29,10 +29,10 @@ public class PacienteController {
     }
 
     // endpoint tipo post para crear un paciente nuevo
-    @PostMapping("/crearPaciente")
-    public void CrearPaciente(@RequestBody Paciente paciente){
-        pacienteService.save(paciente);
-    }
+        @PostMapping("/crearPaciente")
+        public Paciente CrearPaciente(@RequestBody Paciente paciente){
+            return pacienteService.save(paciente);
+        }
 
     // endpoint tipo delete para eliminar un paciente por su id
     @DeleteMapping("/eliminarPaciente/{id}")
